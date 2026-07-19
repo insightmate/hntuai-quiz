@@ -18034,6 +18034,9 @@ const CSS = `
   .hn-hero-sub{font-size:clamp(16px,2.1vw,19px);color:var(--ink-2);max-width:54ch;margin:22px auto 0;line-height:1.5}
   .hn-hero-sub b{color:var(--ink);font-weight:600}
   .hn-firewall{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(17px,2.3vw,21px);color:var(--gold);margin:14px auto 0;max-width:44ch}
+  .hn-cta-top{display:inline-block;margin:24px auto 2px;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;letter-spacing:.09em;text-transform:uppercase;color:var(--paper);background:var(--ink);border:none;border-radius:3px;padding:15px 30px;cursor:pointer;transition:background .15s,transform .08s}
+  .hn-cta-top:hover{background:var(--gold)}
+  .hn-cta-top:active{transform:translateY(1px)}
   .hn-hero-close{font-family:'Fraunces',serif;font-size:clamp(18px,2.5vw,23px);line-height:1.36;color:var(--ink);max-width:36ch;margin:24px auto 0}
   .hn-rule{height:1px;background:var(--line);margin:46px 0}
   .hn-roster-h{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(23px,4vw,34px);line-height:1.12;letter-spacing:-.01em;text-align:center;margin:0 auto;max-width:22ch;color:var(--ink)}
@@ -18077,6 +18080,7 @@ function Intro({ onStart }) {
                 "There is no trick to mastering AI.",
                 React.createElement("span", { className: "l2" }, "There is only mastering yourself.")),
             React.createElement("p", { className: "hn-firewall" }, "Self-knowledge is the firewall \u2014 not skill."),
+            React.createElement("button", { className: "hn-cta-top", onClick: onStart }, "Take the diagnostic \u2192"),
             React.createElement("p", { className: "hn-hero-sub" },
                 "This is not a personality quiz to tell you which house you belong in. It is a completely unforgiving audit of your ",
                 React.createElement("b", null, "sovereignty"),
@@ -18086,6 +18090,7 @@ function Intro({ onStart }) {
         React.createElement("div", { className: "hn-rule" }),
         React.createElement("h2", { className: "hn-roster-h" }, "There are 16 ways this plays out. Which one are you?"),
         React.createElement("p", { className: "hn-roster-sub" }, "Right now \u2014 in how you work, and how you live \u2014 you are operating as one of these. You just don\u2019t know which one yet."),
+        React.createElement("a", { className: "hn-meet", href: "/gallery.html" }, "Meet the sixteen \u2192"),
         React.createElement("div", { className: "hn-bouts" }, bouts.map(function (b) {
             return (React.createElement("div", { className: "hn-bout", key: b[0] },
                 React.createElement("div", { className: "l" },
@@ -18095,7 +18100,6 @@ function Intro({ onStart }) {
                     React.createElement("span", { className: "nm" }, b[1]))));
         })),
         React.createElement("p", { className: "hn-seventeen" }, "(And for the 1%, there is a seventeenth. You cannot fake your way into it.)"),
-        React.createElement("a", { className: "hn-meet", href: "/gallery.html" }, "Meet the sixteen \u2192"),
         React.createElement("div", { className: "hn-warning" },
             React.createElement("div", { className: "wl" }, "This is not a tech quiz"),
             React.createElement("p", null,
