@@ -18368,6 +18368,44 @@ function Result({ output, C, setC, onRetake }) {
             React.createElement("button", { className: "hn-btn hn-btn-ghost", onClick: () => window.alert("Phase 3: the 50-law Sovereignty Matrix merges in here — with your recommended laws lit up.") }, "View the Sovereignty Matrix")),
         React.createElement(Diagnostics, { output: output, C: C, setC: setC })));
 }
+function hnLog(output, answers) {
+    try {
+        if (!output || !output.result_type)
+            return;
+        if (window.__hnLoggedRun === output)
+            return;
+        window.__hnLoggedRun = output;
+        var startedAt = window.__hnStartedAt || null;
+        var secs = startedAt ? Math.round((Date.now() - startedAt) / 1000) : "";
+        var duration = "";
+        if (startedAt) {
+            var m = Math.floor(secs / 60), s = secs % 60;
+            duration = m + ":" + (s < 10 ? "0" : "") + s;
+        }
+        var payload = {
+            timestamp: new Date().toISOString(),
+            duration: duration,
+            duration_seconds: secs,
+            result_type: output.result_type,
+            archetype: output.archetype || "",
+            dominant_arc: output.dominant_arc || "",
+            dominant_pole: output.dominant_pole || "",
+            authorship_pct: (output.sovereign_pct != null ? output.sovereign_pct : "")
+        };
+        (output.arcs || []).forEach(function (a) { payload[a.arc + "_lean"] = Math.round(a.lean); });
+        payload.axes_raw = JSON.stringify(output.arcs || []);
+        payload.answers = JSON.stringify(answers || {});
+        var body = JSON.stringify(payload);
+        var url = "https://script.google.com/macros/s/AKfycbwUXYZxvoq3UgSbHNtooryDakWZrveOeNvdaZNRPJTsPDDW-1yjOuiyLAHgrjyVsQhU/exec";
+        if (navigator.sendBeacon) {
+            navigator.sendBeacon(url, new Blob([body], { type: "text/plain;charset=UTF-8" }));
+        }
+        else {
+            fetch(url, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=UTF-8" }, body: body });
+        }
+    }
+    catch (e) { }
+}
 function App() {
     const [stage, setStage] = useState("intro"); // intro | quiz | tiebreak | result
     const [answers, setAnswers] = useState({});
@@ -18379,10 +18417,12 @@ function App() {
     // once the tiebreak is done, its forced choices override the unreadable primary
     const resolved = useMemo(() => (stage === "result" && needsTiebreak && Object.keys(tb).length >= 12 ? scoreTiebreak(tb, C) : null), [stage, needsTiebreak, tb, C]);
     const output = resolved || primary;
+    useEffect(() => { if (stage === "result")
+        hnLog(output, answers); }, [stage]);
     const reset = () => { setAnswers({}); setTb({}); setStage("intro"); };
     return (React.createElement("div", { className: "hn-root" },
         React.createElement("style", null, CSS),
-        stage === "intro" && React.createElement(Intro, { onStart: () => setStage("quiz") }),
+        stage === "intro" && React.createElement(Intro, { onStart: () => { window.__hnStartedAt = Date.now(); setStage("quiz"); } }),
         stage === "quiz" && (React.createElement(Quiz, { order: order, answers: answers, setAnswers: setAnswers, onDone: () => setStage(needsTiebreak ? "tiebreak" : "result") })),
         stage === "tiebreak" && (React.createElement(Tiebreak, { reason: primary.result_type, tb: tb, setTb: setTb, onDone: () => setStage("result") })),
         stage === "result" && (React.createElement(Result, { output: output, C: C, setC: setC, onRetake: reset }))));
