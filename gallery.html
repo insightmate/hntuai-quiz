@@ -1,76 +1,245 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HNTUAI — Preview all result pages</title>
+<title>The 16 Archetypes — The #HowNotToUseAI Diagnostic</title>
+<meta name="description" content="Everyone meets AI through the same eight tensions, and each has two faces — one that closes you down, one that opens you up. Meet all sixteen archetypes, then find out which one is you.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://quiz.hownottouseai.com/gallery.html">
+<meta property="og:site_name" content="How Not To Use AI">
+<meta property="og:title" content="The 16 Archetypes — #HowNotToUseAI">
+<meta property="og:description" content="Eight tensions, two faces each. You are already living as one of these. Which one?">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The 16 Archetypes — #HowNotToUseAI">
+<meta name="twitter:description" content="Eight tensions, two faces each. You are already living as one of these. Which one?">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Spline+Sans+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{--paper:#f6f2ea;--ink:#23201b;--muted:#8c8272;--hair:#e5ddcd;--clay:#a8443a;--sage:#4f7a6f;--gold:#986312;--card:#fffdf8;}
+  :root{
+    --paper:#f6f2ea;--card:#fffdf8;--ink:#23201b;--ink-soft:#463f36;--muted:#8c8272;
+    --hair:#e5ddcd;--clay:#a8443a;--sage:#4f7a6f;--gold:#b07d2b;
+  }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.5;}
-  .wrap{max-width:900px;margin:0 auto;padding:40px 22px 80px;}
-  .bar{font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:.06em;color:#6f6656;}
-  .bar a{color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid #d4ab63;}
-  h1{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:34px;letter-spacing:-.01em;margin:14px 0 6px;}
-  .lede{color:#463f36;max-width:60ch;margin:0 0 8px;}
-  .note{font-size:14px;color:var(--muted);max-width:64ch;margin:0 0 28px;}
-  .axis{margin:22px 0 0;}
-  .axis h2{font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:0 0 10px;border-top:1px solid var(--hair);padding-top:14px;}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-  a.card{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--hair);border-radius:12px;padding:16px 18px;transition:border-color .15s,transform .1s;}
-  a.card:hover{transform:translateY(-1px);}
-  a.card.shadow{border-left:3px solid var(--clay);} a.card.shadow:hover{border-color:var(--clay);}
-  a.card.trans{border-left:3px solid var(--sage);} a.card.trans:hover{border-color:var(--sage);}
-  a.card.sov{border-left:3px solid var(--gold);grid-column:1/-1;} a.card.sov:hover{border-color:var(--gold);}
-  .pole{font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
-  .nm{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-top:4px;}
-  .shadow .nm{color:var(--clay);} .trans .nm{color:var(--sage);} .sov .nm{color:var(--gold);}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter','Helvetica Neue',Arial,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:0 22px}
+  .topbar{border-bottom:1px solid var(--hair);font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+  .topbar .wrap{padding:15px 22px}
+
+  header.hero{padding:64px 0 26px;text-align:center}
+  .kicker{font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:clamp(38px,7vw,64px);line-height:1.02;letter-spacing:-.02em;margin:0 0 22px;color:var(--ink)}
+  .lede{font-size:18px;color:var(--ink-soft);max-width:34em;margin:0 auto;line-height:1.6}
+  .lede b{color:var(--ink);font-weight:600}
+  .lede + .lede{margin-top:16px}
+
+  .rule{height:1px;background:var(--hair);margin:44px 0 8px}
+
+  .axis{padding:34px 0;border-bottom:1px solid var(--hair)}
+  .axis-label{font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:500;text-align:center;margin-bottom:4px}
+  .axis-tension{font-family:'Fraunces',serif;font-style:italic;font-size:16.5px;color:var(--muted);text-align:center;margin:0 0 24px}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .arch{border:1px solid var(--hair);border-radius:14px;padding:22px 22px 24px;background:var(--card)}
+  .arch .role{font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:9px}
+  .arch.shadow .role{color:var(--clay)}
+  .arch.turn .role{color:var(--sage)}
+  .arch h3{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:24px;line-height:1.08;letter-spacing:-.01em;margin:0 0 12px}
+  .arch.shadow h3{color:var(--clay)}
+  .arch.turn h3{color:var(--sage)}
+  .arch .syn{font-size:15.5px;line-height:1.55;color:var(--ink-soft);margin:0}
+
+  .seventeen{text-align:center;padding:46px 0 8px}
+  .seventeen p{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(18px,3.4vw,22px);line-height:1.5;color:var(--ink-soft);max-width:24em;margin:0 auto}
+
+  .cta{text-align:center;padding:30px 0 12px}
+  .cta p{font-size:17px;color:var(--ink-soft);max-width:30em;margin:0 auto 22px}
+  .btn{display:inline-block;background:var(--ink);color:var(--paper);font-weight:600;font-size:16px;letter-spacing:.02em;padding:16px 34px;border-radius:999px;text-decoration:none;transition:transform .12s,background .15s}
+  .btn:hover{background:var(--clay);transform:translateY(-1px)}
+
+  footer{border-top:1px solid var(--hair);margin-top:44px;padding:28px 0 64px;text-align:center}
+  footer p{font-size:12.5px;letter-spacing:.02em;color:var(--muted);margin:0}
+
+  @media (max-width:560px){
+    body{font-size:16px}
+    header.hero{padding:44px 0 20px}
+    .pair{grid-template-columns:1fr;gap:14px}
+    .axis{padding:28px 0}
+  }
 </style>
 </head>
 <body>
+
+<div class="topbar"><div class="wrap">#HowNotToUseAI · The Diagnostic</div></div>
+
 <div class="wrap">
-  <div class="bar">Local test build &middot; <a href="index.html">&larr; back to the quiz</a></div>
-  <h1>The 17 result pages</h1>
-  <p class="lede">Open any page directly to see its look and copy. Opened this way, each shows its built-in engine example (correct, but not <em>your</em> numbers).</p>
-  <p class="note">To see a page fill with real numbers, take the quiz on the previous screen and press &ldquo;See your full result page&rdquo; at the end &mdash; the marker positions, the two headline percentages, and the live-edge line will reflect how you actually answered. The 18th outcome (an honest &ldquo;no placement&rdquo;) has no archetype page by design; it shows on the quiz result screen itself.</p>
 
-  <div class="axis"><h2>Boundaries &middot; taste as door or fence</h2><div class="row">
-    <a class="card shadow" href="pages/purist.html"><div class="pole">Shadow</div><div class="nm">The Purist</div></a>
-    <a class="card trans" href="pages/trickster.html"><div class="pole">Transmuted</div><div class="nm">The Trickster</div></a></div></div>
+  <header class="hero">
+    <div class="kicker">Meet the field</div>
+    <h1>The sixteen archetypes</h1>
+    <p class="lede">You do not choose your archetype. You are already living as one of them.</p>
+    <p class="lede">Everyone meets the machine through the same eight tensions. Each one has two faces — one that quietly closes you down, one that opens you up. Here are all sixteen. The diagnostic is what tells you which face is yours, and it does not flatter.</p>
+  </header>
 
-  <div class="axis"><h2>Agency &middot; the body as compass</h2><div class="row">
-    <a class="card shadow" href="pages/captive.html"><div class="pole">Shadow</div><div class="nm">The Captive</div></a>
-    <a class="card trans" href="pages/cultivator.html"><div class="pole">Transmuted</div><div class="nm">The Cultivator</div></a></div></div>
+  <div class="rule"></div>
 
-  <div class="axis"><h2>Voice &middot; the risk of being seen</h2><div class="row">
-    <a class="card shadow" href="pages/automaton.html"><div class="pole">Shadow</div><div class="nm">The Automaton</div></a>
-    <a class="card trans" href="pages/auteur.html"><div class="pole">Transmuted</div><div class="nm">The Auteur</div></a></div></div>
+  <!-- VISION -->
+  <section class="axis">
+    <div class="axis-label">Vision</div>
+    <p class="axis-tension">How you hold a future too large to hold</p>
+    <div class="pair">
+      <div class="arch shadow">
+        <div class="role">Where you hide</div>
+        <h3>The Fatalist</h3>
+        <p class="syn">Decides how it ends — doom or rapture — and takes their hands off the wheel. They call the surrender realism.</p>
+      </div>
+      <div class="arch turn">
+        <div class="role">Where you lead</div>
+        <h3>The Diviner</h3>
+        <p class="syn">Reads the future like weather and moves inside it. Sonar, not prophecy; the hands stay on.</p>
+      </div>
+    </div>
+  </section>
 
-  <div class="axis"><h2>Changemaking &middot; critique or building</h2><div class="row">
-    <a class="card shadow" href="pages/reformer.html"><div class="pole">Shadow</div><div class="nm">The Reformer</div></a>
-    <a class="card trans" href="pages/worldbuilder.html"><div class="pole">Transmuted</div><div class="nm">The Worldbuilder</div></a></div></div>
+  <!-- VALUE -->
+  <section class="axis">
+    <div class="axis-label">Value</div>
+    <p class="axis-tension">What your time is actually for</p>
+    <div class="pair">
+      <div class="arch shadow">
+        <div class="role">Where you hide</div>
+        <h3>The Hustler</h3>
+        <p class="syn">Time is precious, so never waste a second — every hour has to show something for it. Somehow the saved time keeps vanishing.</p>
+      </div>
+      <div class="arch turn">
+        <div class="role">Where you lead</div>
+        <h3>The Humanist</h3>
+        <p class="syn">Time is precious, so they refuse to spend it all producing. They decide what it is for, and they live it.</p>
+      </div>
+    </div>
+  </section>
 
-  <div class="axis"><h2>Value &middot; time and self-worth</h2><div class="row">
-    <a class="card shadow" href="pages/hustler.html"><div class="pole">Shadow</div><div class="nm">The Hustler</div></a>
-    <a class="card trans" href="pages/humanist.html"><div class="pole">Transmuted</div><div class="nm">The Humanist</div></a></div></div>
+  <!-- VOICE -->
+  <section class="axis">
+    <div class="axis-label">Voice</div>
+    <p class="axis-tension">The risk of being seen in your own work</p>
+    <div class="pair">
+      <div class="arch shadow">
+        <div class="role">Where you hide</div>
+        <h3>The Automaton</h3>
+        <p class="syn">Feels exposure precisely, and sands it off before anyone else can find it. Hidden, not empty.</p>
+      </div>
+      <div class="arch turn">
+        <div class="role">Where you lead</div>
+        <h3>The Auteur</h3>
+        <p class="syn">Feels presence precisely, and keeps theirs in on purpose. They refused to disappear.</p>
+      </div>
+    </div>
+  </section>
 
-  <div class="axis"><h2>Flow &middot; control or emergence</h2><div class="row">
-    <a class="card shadow" href="pages/controller.html"><div class="pole">Shadow</div><div class="nm">The Controller</div></a>
-    <a class="card trans" href="pages/creatrix.html"><div class="pole">Transmuted</div><div class="nm">The Creatrix</div></a></div></div>
+  <!-- AGENCY -->
+  <section class="axis">
+    <div class="axis-label">Agency</div>
+    <p class="axis-tension">Whether the body gets a vote</p>
+    <div class="pair">
+      <div class="arch shadow">
+        <div class="role">Where you hide</div>
+        <h3>The Captive</h3>
+        <p class="syn">The body says this is wrong — and they swallow it, and explain why the cost is acceptable.</p>
+      </div>
+      <div class="arch turn">
+        <div class="role">Where you lead</div>
+        <h3>The Cultivator</h3>
+        <p class="syn">The body says this is wrong — and they believe it, and walk toward what it recognises as real.</p>
+      </div>
+    </div>
+  </section>
 
-  <div class="axis"><h2>Vision &middot; certainty or the open future</h2><div class="row">
-    <a class="card shadow" href="pages/fatalist.html"><div class="pole">Shadow</div><div class="nm">The Fatalist</div></a>
-    <a class="card trans" href="pages/diviner.html"><div class="pole">Transmuted</div><div class="nm">The Diviner</div></a></div></div>
+  <!-- BOUNDARIES -->
+  <section class="axis">
+    <div class="axis-label">Boundaries</div>
+    <p class="axis-tension">Taste as a door, or taste as a fence</p>
+    <div class="pair">
+      <div class="arch shadow">
+        <div class="role">Where you hide</div>
+        <h3>The Purist</h3>
+        <p class="syn">Protects the real by inspecting everyone else's work for tells, and redrawing the line each time they move.</p>
+      </div>
+      <div class="arch turn">
+        <div class="role">Where you lead</div>
+        <h3>The Trickster</h3>
+        <p class="syn">Protects the real by owning the conditions they work under, so the question is settled at the source.</p>
+      </div>
+    </div>
+  </section>
 
-  <div class="axis"><h2>Partnership &middot; who authors belonging</h2><div class="row">
-    <a class="card shadow" href="pages/companion-seeker.html"><div class="pole">Shadow</div><div class="nm">The Companion Seeker</div></a>
-    <a class="card trans" href="pages/kin-builder.html"><div class="pole">Transmuted</div><div class="nm">The Kin Builder</div></a></div></div>
+  <!-- PARTNERSHIP -->
+  <section class="axis">
+    <div class="axis-label">Partnership</div>
+    <p class="axis-tension">Who gets to author your belonging</p>
+    <div class="pair">
+      <div class="arch shadow">
+        <div class="role">Where you hide</div>
+        <h3>The Companion Seeker</h3>
+        <p class="syn">Meets the longing with something that can never reject them — so it can never hurt them, and never quite reach them.</p>
+      </div>
+      <div class="arch turn">
+        <div class="role">Where you lead</div>
+        <h3>The Kin Builder</h3>
+        <p class="syn">Meets the longing with people, and with a tool that can disagree — so what witnesses them can actually see them.</p>
+      </div>
+    </div>
+  </section>
 
-  <div class="axis"><h2>The integrated position</h2><div class="row">
-    <a class="card sov" href="pages/sovereign.html"><div class="pole">Beyond the eight axes</div><div class="nm">The Sovereign</div></a></div></div>
+  <!-- FLOW -->
+  <section class="axis">
+    <div class="axis-label">Flow</div>
+    <p class="axis-tension">Control, or emergence</p>
+    <div class="pair">
+      <div class="arch shadow">
+        <div class="role">Where you hide</div>
+        <h3>The Controller</h3>
+        <p class="syn">Believes mediocrity comes from too little control, so they specify everything and fight every deviation out.</p>
+      </div>
+      <div class="arch turn">
+        <div class="role">Where you lead</div>
+        <h3>The Creatrix</h3>
+        <p class="syn">Believes mediocrity comes from too much control, so they convene the conditions and author the work by choosing what to keep.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHANGEMAKING -->
+  <section class="axis">
+    <div class="axis-label">Changemaking</div>
+    <p class="axis-tension">Naming what is wrong, or building what is next</p>
+    <div class="pair">
+      <div class="arch shadow">
+        <div class="role">Where you hide</div>
+        <h3>The Reformer</h3>
+        <p class="syn">Names exactly what is wrong, in devastating detail, to the people who will not change it. Being right is not the same as being effective.</p>
+      </div>
+      <div class="arch turn">
+        <div class="role">Where you lead</div>
+        <h3>The Worldbuilder</h3>
+        <p class="syn">Takes the same map and builds the alternative — the house people can actually leave the old one for.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="seventeen">
+    <p>And past the sixteen, for the one in a hundred, there is a seventeenth. It is not on this page. You cannot fake your way into it.</p>
+  </div>
+
+  <div class="cta">
+    <p>The only way to know which one is you is to answer for the person you actually are — not the one you would like to be.</p>
+    <a class="btn" href="/">Take the diagnostic &rarr;</a>
+  </div>
+
 </div>
+
+<footer><div class="wrap"><p>Built on the book — How Not To Use AI</p></div></footer>
+
 </body>
 </html>
