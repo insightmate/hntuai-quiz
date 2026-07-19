@@ -4,35 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The 16 Archetypes — The #HowNotToUseAI Diagnostic</title>
-<meta name="description" content="Everyone meets AI through the same eight tensions, and each has two faces — one that closes you down, one that opens you up. Meet all sixteen archetypes, then find out which one is you.">
+<meta name="description" content="You don't pick your archetype — it is the strategy you are already running to survive the machine. Meet all sixteen: eight tensions, each with its Armour and its Edge.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://quiz.hownottouseai.com/gallery.html">
 <meta property="og:site_name" content="How Not To Use AI">
 <meta property="og:title" content="The 16 Archetypes — #HowNotToUseAI">
-<meta property="og:description" content="Eight tensions, two faces each. You are already living as one of these. Which one?">
+<meta property="og:description" content="You don't pick your archetype — it is the strategy you are already running. Eight tensions, each with its Armour and its Edge. Which one are you?">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The 16 Archetypes — #HowNotToUseAI">
-<meta name="twitter:description" content="Eight tensions, two faces each. You are already living as one of these. Which one?">
+<meta name="twitter:description" content="You don't pick your archetype — it is the strategy you are already running. Which one are you?">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#f6f2ea;--card:#fffdf8;--ink:#23201b;--ink-soft:#463f36;--muted:#8c8272;
-    --hair:#e5ddcd;--clay:#a8443a;--sage:#4f7a6f;--gold:#b07d2b;
+    --hair:#e5ddcd;--gold:#b07d2b;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter','Helvetica Neue',Arial,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
   .wrap{max-width:760px;margin:0 auto;padding:0 22px}
   .topbar{border-bottom:1px solid var(--hair);font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-  .topbar .wrap{padding:15px 22px}
+  .topbar .wrap{padding:14px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .topbar a{text-decoration:none;color:var(--muted)}
+  .topbar .tb-cta{color:var(--gold)}
+  .topbar a:hover{text-decoration:underline}
 
   header.hero{padding:64px 0 26px;text-align:center}
   .kicker{font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
   h1{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:clamp(38px,7vw,64px);line-height:1.02;letter-spacing:-.02em;margin:0 0 22px;color:var(--ink)}
-  .lede{font-size:18px;color:var(--ink-soft);max-width:34em;margin:0 auto;line-height:1.6}
-  .lede b{color:var(--ink);font-weight:600}
+  .lede{font-size:18px;color:var(--ink-soft);max-width:35em;margin:0 auto;line-height:1.6}
+  .lede b{color:var(--gold);font-weight:600}
   .lede + .lede{margin-top:16px}
 
   .rule{height:1px;background:var(--hair);margin:44px 0 8px}
@@ -42,21 +45,18 @@
   .axis-tension{font-family:'Fraunces',serif;font-style:italic;font-size:16.5px;color:var(--muted);text-align:center;margin:0 0 24px}
   .pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}
   .arch{border:1px solid var(--hair);border-radius:14px;padding:22px 22px 24px;background:var(--card)}
-  .arch .role{font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:9px}
-  .arch.shadow .role{color:var(--clay)}
-  .arch.turn .role{color:var(--sage)}
-  .arch h3{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:24px;line-height:1.08;letter-spacing:-.01em;margin:0 0 12px}
-  .arch.shadow h3{color:var(--clay)}
-  .arch.turn h3{color:var(--sage)}
+  .arch .role{font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:9px;color:var(--gold)}
+  .arch h3{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:24px;line-height:1.08;letter-spacing:-.01em;margin:0 0 12px;color:var(--gold)}
   .arch .syn{font-size:15.5px;line-height:1.55;color:var(--ink-soft);margin:0}
 
-  .seventeen{text-align:center;padding:46px 0 8px}
-  .seventeen p{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(18px,3.4vw,22px);line-height:1.5;color:var(--ink-soft);max-width:24em;margin:0 auto}
+  .seventeen{text-align:center;padding:48px 0 8px}
+  .seventeen .s-label{font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  .seventeen p{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(18px,3.4vw,22px);line-height:1.5;color:var(--ink-soft);max-width:26em;margin:0 auto}
 
-  .cta{text-align:center;padding:30px 0 12px}
-  .cta p{font-size:17px;color:var(--ink-soft);max-width:30em;margin:0 auto 22px}
+  .cta{text-align:center;padding:32px 0 12px}
+  .cta p{font-size:17px;color:var(--ink-soft);max-width:32em;margin:0 auto 22px}
   .btn{display:inline-block;background:var(--ink);color:var(--paper);font-weight:600;font-size:16px;letter-spacing:.02em;padding:16px 34px;border-radius:999px;text-decoration:none;transition:transform .12s,background .15s}
-  .btn:hover{background:var(--clay);transform:translateY(-1px)}
+  .btn:hover{background:var(--gold);transform:translateY(-1px)}
 
   footer{border-top:1px solid var(--hair);margin-top:44px;padding:28px 0 64px;text-align:center}
   footer p{font-size:12.5px;letter-spacing:.02em;color:var(--muted);margin:0}
@@ -71,15 +71,15 @@
 </head>
 <body>
 
-<div class="topbar"><div class="wrap">#HowNotToUseAI · The Diagnostic</div></div>
+<div class="topbar"><div class="wrap"><a href="/" class="tb-home">#HowNotToUseAI · The Diagnostic</a><a href="/" class="tb-cta">Take the diagnostic &rarr;</a></div></div>
 
 <div class="wrap">
 
   <header class="hero">
-    <div class="kicker">Meet the field</div>
+    <div class="kicker">The field</div>
     <h1>The sixteen archetypes</h1>
-    <p class="lede">You do not choose your archetype. You are already living as one of them.</p>
-    <p class="lede">Everyone meets the machine through the same eight tensions. Each one has two faces — one that quietly closes you down, one that opens you up. Here are all sixteen. The diagnostic is what tells you which face is yours, and it does not flatter.</p>
+    <p class="lede">You do not pick your archetype. It is the strategy you are already running to survive the machine.</p>
+    <p class="lede">Everyone meets the machine through the same eight tensions, and on each one you have built a genuinely intelligent response. One is your <b>Armour</b> — it protects you from the friction of the system. The other is your <b>Edge</b> — it cuts straight through it. Here are all sixteen. The diagnostic tells you exactly which one you are running.</p>
   </header>
 
   <div class="rule"></div>
@@ -87,17 +87,17 @@
   <!-- VISION -->
   <section class="axis">
     <div class="axis-label">Vision</div>
-    <p class="axis-tension">How you hold a future too large to hold</p>
+    <p class="axis-tension">How you hold a future too large to predict</p>
     <div class="pair">
-      <div class="arch shadow">
-        <div class="role">Where you hide</div>
+      <div class="arch">
+        <div class="role">Armour</div>
         <h3>The Fatalist</h3>
-        <p class="syn">Decides how it ends — doom or rapture — and takes their hands off the wheel. They call the surrender realism.</p>
+        <p class="syn">Claims power by deciding the ending. Doom or rapture, they pick one — because a settled future, even a terrible one, is easier to stand on than an open one. Then the hands come off the wheel.</p>
       </div>
-      <div class="arch turn">
-        <div class="role">Where you lead</div>
+      <div class="arch">
+        <div class="role">Edge</div>
         <h3>The Diviner</h3>
-        <p class="syn">Reads the future like weather and moves inside it. Sonar, not prophecy; the hands stay on.</p>
+        <p class="syn">Claims power by moving through the fog. They read the present like weather and take the next small, real step — sonar, not prophecy — without needing to know how it ends.</p>
       </div>
     </div>
   </section>
@@ -105,17 +105,17 @@
   <!-- VALUE -->
   <section class="axis">
     <div class="axis-label">Value</div>
-    <p class="axis-tension">What your time is actually for</p>
+    <p class="axis-tension">How you defend the worth of your time</p>
     <div class="pair">
-      <div class="arch shadow">
-        <div class="role">Where you hide</div>
+      <div class="arch">
+        <div class="role">Armour</div>
         <h3>The Hustler</h3>
-        <p class="syn">Time is precious, so never waste a second — every hour has to show something for it. Somehow the saved time keeps vanishing.</p>
+        <p class="syn">Refuses to be left behind. Every hour has to show something for it, so they fill all of them — turning speed into a shield against the fear of being irrelevant. Somehow the saved time never arrives.</p>
       </div>
-      <div class="arch turn">
-        <div class="role">Where you lead</div>
+      <div class="arch">
+        <div class="role">Edge</div>
         <h3>The Humanist</h3>
-        <p class="syn">Time is precious, so they refuse to spend it all producing. They decide what it is for, and they live it.</p>
+        <p class="syn">Refuses to be consumed. They guard the space between the hours and decide what a life is actually for — not just what it can be made to produce.</p>
       </div>
     </div>
   </section>
@@ -123,17 +123,17 @@
   <!-- VOICE -->
   <section class="axis">
     <div class="axis-label">Voice</div>
-    <p class="axis-tension">The risk of being seen in your own work</p>
+    <p class="axis-tension">How you manage the risk of being seen</p>
     <div class="pair">
-      <div class="arch shadow">
-        <div class="role">Where you hide</div>
+      <div class="arch">
+        <div class="role">Armour</div>
         <h3>The Automaton</h3>
-        <p class="syn">Feels exposure precisely, and sands it off before anyone else can find it. Hidden, not empty.</p>
+        <p class="syn">Masters the art of camouflage. They feel exposure precisely, so they sand off every edge until the work is flawless, frictionless, and impossible to criticise — because nothing personal is left in it to hit.</p>
       </div>
-      <div class="arch turn">
-        <div class="role">Where you lead</div>
+      <div class="arch">
+        <div class="role">Edge</div>
         <h3>The Auteur</h3>
-        <p class="syn">Feels presence precisely, and keeps theirs in on purpose. They refused to disappear.</p>
+        <p class="syn">Masters the art of presence. They feel the exact same exposure — and leave their fingerprints on the work anyway, staking everything on the one thing a machine cannot fake.</p>
       </div>
     </div>
   </section>
@@ -141,17 +141,17 @@
   <!-- AGENCY -->
   <section class="axis">
     <div class="axis-label">Agency</div>
-    <p class="axis-tension">Whether the body gets a vote</p>
+    <p class="axis-tension">Who gets the final vote when the room shifts</p>
     <div class="pair">
-      <div class="arch shadow">
-        <div class="role">Where you hide</div>
+      <div class="arch">
+        <div class="role">Armour</div>
         <h3>The Captive</h3>
-        <p class="syn">The body says this is wrong — and they swallow it, and explain why the cost is acceptable.</p>
+        <p class="syn">The ultimate diplomat. When the gut says something is wrong, they override it — to keep the peace, meet the mandate, and hold their seat at the table. The cost gets explained away.</p>
       </div>
-      <div class="arch turn">
-        <div class="role">Where you lead</div>
+      <div class="arch">
+        <div class="role">Edge</div>
         <h3>The Cultivator</h3>
-        <p class="syn">The body says this is wrong — and they believe it, and walk toward what it recognises as real.</p>
+        <p class="syn">The uncompromising compass. When the gut says something is wrong, they treat it as data — and will walk away from the mandate entirely to protect what feels real.</p>
       </div>
     </div>
   </section>
@@ -159,17 +159,17 @@
   <!-- BOUNDARIES -->
   <section class="axis">
     <div class="axis-label">Boundaries</div>
-    <p class="axis-tension">Taste as a door, or taste as a fence</p>
+    <p class="axis-tension">How you protect your standard of taste</p>
     <div class="pair">
-      <div class="arch shadow">
-        <div class="role">Where you hide</div>
+      <div class="arch">
+        <div class="role">Armour</div>
         <h3>The Purist</h3>
-        <p class="syn">Protects the real by inspecting everyone else's work for tells, and redrawing the line each time they move.</p>
+        <p class="syn">The fierce gatekeeper. They protect the standard by patrolling the perimeter — reading everyone else's work for tells, and redrawing the line the moment it moves.</p>
       </div>
-      <div class="arch turn">
-        <div class="role">Where you lead</div>
+      <div class="arch">
+        <div class="role">Edge</div>
         <h3>The Trickster</h3>
-        <p class="syn">Protects the real by owning the conditions they work under, so the question is settled at the source.</p>
+        <p class="syn">The fluid architect. They protect the standard by owning the conditions of the work, so the question of what is real is settled at the source — on their own terms.</p>
       </div>
     </div>
   </section>
@@ -177,17 +177,17 @@
   <!-- PARTNERSHIP -->
   <section class="axis">
     <div class="axis-label">Partnership</div>
-    <p class="axis-tension">Who gets to author your belonging</p>
+    <p class="axis-tension">Where you go to be seen</p>
     <div class="pair">
-      <div class="arch shadow">
-        <div class="role">Where you hide</div>
+      <div class="arch">
+        <div class="role">Armour</div>
         <h3>The Companion Seeker</h3>
-        <p class="syn">Meets the longing with something that can never reject them — so it can never hurt them, and never quite reach them.</p>
+        <p class="syn">Builds a flawless sanctuary. They meet the longing for connection with something that can never reject them — a peace so safe that nothing in it can quite reach them either.</p>
       </div>
-      <div class="arch turn">
-        <div class="role">Where you lead</div>
+      <div class="arch">
+        <div class="role">Edge</div>
         <h3>The Kin Builder</h3>
-        <p class="syn">Meets the longing with people, and with a tool that can disagree — so what witnesses them can actually see them.</p>
+        <p class="syn">Demands the friction of reality. They take the longing to actual people, and to anything that can disagree with them — accepting the risk of being seen in exchange for actually being seen.</p>
       </div>
     </div>
   </section>
@@ -195,17 +195,17 @@
   <!-- FLOW -->
   <section class="axis">
     <div class="axis-label">Flow</div>
-    <p class="axis-tension">Control, or emergence</p>
+    <p class="axis-tension">How you reach for greatness</p>
     <div class="pair">
-      <div class="arch shadow">
-        <div class="role">Where you hide</div>
+      <div class="arch">
+        <div class="role">Armour</div>
         <h3>The Controller</h3>
-        <p class="syn">Believes mediocrity comes from too little control, so they specify everything and fight every deviation out.</p>
+        <p class="syn">Secures the outcome through precision. They leave nothing to chance — specifying every detail, catching every deviation, fighting the work into the exact shape they already pictured.</p>
       </div>
-      <div class="arch turn">
-        <div class="role">Where you lead</div>
+      <div class="arch">
+        <div class="role">Edge</div>
         <h3>The Creatrix</h3>
-        <p class="syn">Believes mediocrity comes from too much control, so they convene the conditions and author the work by choosing what to keep.</p>
+        <p class="syn">Secures the outcome through curation. They leave room for oxygen, set the conditions, and author the work by choosing — with a ruthless eye — exactly what to keep.</p>
       </div>
     </div>
   </section>
@@ -213,28 +213,29 @@
   <!-- CHANGEMAKING -->
   <section class="axis">
     <div class="axis-label">Changemaking</div>
-    <p class="axis-tension">Naming what is wrong, or building what is next</p>
+    <p class="axis-tension">How you confront a broken system</p>
     <div class="pair">
-      <div class="arch shadow">
-        <div class="role">Where you hide</div>
+      <div class="arch">
+        <div class="role">Armour</div>
         <h3>The Reformer</h3>
-        <p class="syn">Names exactly what is wrong, in devastating detail, to the people who will not change it. Being right is not the same as being effective.</p>
+        <p class="syn">The relentless truth-teller. They hold the system to account by naming exactly what is broken, in devastating detail — making sure the harm is documented and undeniable.</p>
       </div>
-      <div class="arch turn">
-        <div class="role">Where you lead</div>
+      <div class="arch">
+        <div class="role">Edge</div>
         <h3>The Worldbuilder</h3>
-        <p class="syn">Takes the same map and builds the alternative — the house people can actually leave the old one for.</p>
+        <p class="syn">The rogue architect. They take the exact same map of the harm — and put their whole energy into quietly building the exit no one else was building.</p>
       </div>
     </div>
   </section>
 
   <div class="seventeen">
-    <p>And past the sixteen, for the one in a hundred, there is a seventeenth. It is not on this page. You cannot fake your way into it.</p>
+    <div class="s-label">The 1%</div>
+    <p>Past the sixteen, for the one in a hundred, there is a seventeenth. It is not on this page. You cannot fake your way into it, and you cannot buy it.</p>
   </div>
 
   <div class="cta">
-    <p>The only way to know which one is you is to answer for the person you actually are — not the one you would like to be.</p>
-    <a class="btn" href="/">Take the diagnostic &rarr;</a>
+    <p>The only way to know is to answer for the person you actually are today — not the sanitised version you wish you were.</p>
+    <a class="btn" href="/">Audit my agency &rarr;</a>
   </div>
 
 </div>
