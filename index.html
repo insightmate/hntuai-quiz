@@ -18044,6 +18044,8 @@ const CSS = `
   .hn-bout .nm{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(17px,2.9vw,25px);letter-spacing:-.01em;color:var(--ink);line-height:1.06}
   .hn-bout .vs{font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);text-align:center}
   .hn-seventeen{text-align:center;margin:26px 0 0;font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--muted)}
+  .hn-meet{display:block;text-align:center;margin:20px 0 0;font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);text-decoration:none}
+  .hn-meet:hover{text-decoration:underline}
   .hn-warning{background:var(--ink);color:var(--bone);border-radius:5px;padding:28px 30px;margin:44px 0 0}
   .hn-warning .wl{font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:0 0 12px}
   .hn-warning p{margin:0;font-size:16px;line-height:1.62;color:#E9E5DA}
@@ -18093,6 +18095,7 @@ function Intro({ onStart }) {
                     React.createElement("span", { className: "nm" }, b[1]))));
         })),
         React.createElement("p", { className: "hn-seventeen" }, "(And for the 1%, there is a seventeenth. You cannot fake your way into it.)"),
+        React.createElement("a", { className: "hn-meet", href: "/gallery.html" }, "Meet the sixteen \u2192"),
         React.createElement("div", { className: "hn-warning" },
             React.createElement("div", { className: "wl" }, "This is not a tech quiz"),
             React.createElement("p", null,
