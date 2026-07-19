@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HNTUAI — Preview all result pages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Spline+Sans+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#f6f2ea;--ink:#23201b;--muted:#8c8272;--hair:#e5ddcd;--clay:#a8443a;--sage:#4f7a6f;--gold:#986312;--card:#fffdf8;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.5;}
+  .wrap{max-width:900px;margin:0 auto;padding:40px 22px 80px;}
+  .bar{font-family:'Spline Sans Mono',monospace;font-size:12px;letter-spacing:.06em;color:#6f6656;}
+  .bar a{color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid #d4ab63;}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:34px;letter-spacing:-.01em;margin:14px 0 6px;}
+  .lede{color:#463f36;max-width:60ch;margin:0 0 8px;}
+  .note{font-size:14px;color:var(--muted);max-width:64ch;margin:0 0 28px;}
+  .axis{margin:22px 0 0;}
+  .axis h2{font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:0 0 10px;border-top:1px solid var(--hair);padding-top:14px;}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  a.card{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--hair);border-radius:12px;padding:16px 18px;transition:border-color .15s,transform .1s;}
+  a.card:hover{transform:translateY(-1px);}
+  a.card.shadow{border-left:3px solid var(--clay);} a.card.shadow:hover{border-color:var(--clay);}
+  a.card.trans{border-left:3px solid var(--sage);} a.card.trans:hover{border-color:var(--sage);}
+  a.card.sov{border-left:3px solid var(--gold);grid-column:1/-1;} a.card.sov:hover{border-color:var(--gold);}
+  .pole{font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+  .nm{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin-top:4px;}
+  .shadow .nm{color:var(--clay);} .trans .nm{color:var(--sage);} .sov .nm{color:var(--gold);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">Local test build &middot; <a href="index.html">&larr; back to the quiz</a></div>
+  <h1>The 17 result pages</h1>
+  <p class="lede">Open any page directly to see its look and copy. Opened this way, each shows its built-in engine example (correct, but not <em>your</em> numbers).</p>
+  <p class="note">To see a page fill with real numbers, take the quiz on the previous screen and press &ldquo;See your full result page&rdquo; at the end &mdash; the marker positions, the two headline percentages, and the live-edge line will reflect how you actually answered. The 18th outcome (an honest &ldquo;no placement&rdquo;) has no archetype page by design; it shows on the quiz result screen itself.</p>
+
+  <div class="axis"><h2>Boundaries &middot; taste as door or fence</h2><div class="row">
+    <a class="card shadow" href="pages/purist.html"><div class="pole">Shadow</div><div class="nm">The Purist</div></a>
+    <a class="card trans" href="pages/trickster.html"><div class="pole">Transmuted</div><div class="nm">The Trickster</div></a></div></div>
+
+  <div class="axis"><h2>Agency &middot; the body as compass</h2><div class="row">
+    <a class="card shadow" href="pages/captive.html"><div class="pole">Shadow</div><div class="nm">The Captive</div></a>
+    <a class="card trans" href="pages/cultivator.html"><div class="pole">Transmuted</div><div class="nm">The Cultivator</div></a></div></div>
+
+  <div class="axis"><h2>Voice &middot; the risk of being seen</h2><div class="row">
+    <a class="card shadow" href="pages/automaton.html"><div class="pole">Shadow</div><div class="nm">The Automaton</div></a>
+    <a class="card trans" href="pages/auteur.html"><div class="pole">Transmuted</div><div class="nm">The Auteur</div></a></div></div>
+
+  <div class="axis"><h2>Changemaking &middot; critique or building</h2><div class="row">
+    <a class="card shadow" href="pages/reformer.html"><div class="pole">Shadow</div><div class="nm">The Reformer</div></a>
+    <a class="card trans" href="pages/worldbuilder.html"><div class="pole">Transmuted</div><div class="nm">The Worldbuilder</div></a></div></div>
+
+  <div class="axis"><h2>Value &middot; time and self-worth</h2><div class="row">
+    <a class="card shadow" href="pages/hustler.html"><div class="pole">Shadow</div><div class="nm">The Hustler</div></a>
+    <a class="card trans" href="pages/humanist.html"><div class="pole">Transmuted</div><div class="nm">The Humanist</div></a></div></div>
+
+  <div class="axis"><h2>Flow &middot; control or emergence</h2><div class="row">
+    <a class="card shadow" href="pages/controller.html"><div class="pole">Shadow</div><div class="nm">The Controller</div></a>
+    <a class="card trans" href="pages/creatrix.html"><div class="pole">Transmuted</div><div class="nm">The Creatrix</div></a></div></div>
+
+  <div class="axis"><h2>Vision &middot; certainty or the open future</h2><div class="row">
+    <a class="card shadow" href="pages/fatalist.html"><div class="pole">Shadow</div><div class="nm">The Fatalist</div></a>
+    <a class="card trans" href="pages/diviner.html"><div class="pole">Transmuted</div><div class="nm">The Diviner</div></a></div></div>
+
+  <div class="axis"><h2>Partnership &middot; who authors belonging</h2><div class="row">
+    <a class="card shadow" href="pages/companion-seeker.html"><div class="pole">Shadow</div><div class="nm">The Companion Seeker</div></a>
+    <a class="card trans" href="pages/kin-builder.html"><div class="pole">Transmuted</div><div class="nm">The Kin Builder</div></a></div></div>
+
+  <div class="axis"><h2>The integrated position</h2><div class="row">
+    <a class="card sov" href="pages/sovereign.html"><div class="pole">Beyond the eight axes</div><div class="nm">The Sovereign</div></a></div></div>
+</div>
+</body>
+</html>

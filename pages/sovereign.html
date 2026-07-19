@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sovereign — Your #HowNotToUseAI Result</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f6f2ea;--card:#fffdf8;--ink:#23201b;--ink-soft:#463f36;--muted:#8c8272;
+    --hair:#e5ddcd;--clay:#a8443a;--clay-soft:#c98a83;--sage:#4f7a6f;--sage-soft:#9cbcb1;--gold:#b07d2b;
+    --accent:#986312;--accent-soft:#d4ab63;--accent-tint:#f7efdb;
+    --mono:"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Inter","Helvetica Neue",Arial,sans-serif;font-size:17.5px;line-height:1.68;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:672px;margin:0 auto;padding:0 22px;}
+  .topbar{border-bottom:1px solid var(--hair);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+  .topbar .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:16px;padding-bottom:16px;gap:12px;}
+  .topbar .r{color:var(--accent);}
+  .hero{padding:60px 0 30px;}
+  .eyebrow{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:28px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .eyebrow .pole{color:var(--accent);}
+  .eyebrow .dot{width:4px;height:4px;border-radius:50%;background:var(--hair);}
+  h1.name{font-family:"Fraunces",Georgia,serif;font-size:clamp(54px,12vw,90px);font-weight:600;line-height:.97;letter-spacing:-.02em;margin:0 0 24px;color:var(--ink);}
+  h1.name .the{display:block;font-size:.4em;font-weight:500;letter-spacing:.02em;color:var(--muted);margin-bottom:.14em;font-style:italic;}
+  .unsoftened{font-size:20px;line-height:1.56;color:var(--ink-soft);max-width:33em;margin:0;}
+  .unsoftened b{color:var(--ink);font-weight:600;}
+  .centerpiece{padding:56px 0 48px;text-align:center;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);margin:8px 0;}
+  .centerpiece .big{font-family:"Fraunces",Georgia,serif;font-size:clamp(27px,5.6vw,40px);font-weight:500;font-style:italic;line-height:1.28;letter-spacing:-.015em;color:var(--ink);margin:0 auto;max-width:16em;}
+  .centerpiece .big::before{content:"\201C";color:var(--accent-soft);}
+  .centerpiece .big::after{content:"\201D";color:var(--accent-soft);}
+  section{padding:28px 0;}
+  .sec-num{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+  .sec-num::before{content:"";width:26px;height:1.5px;background:var(--accent);display:inline-block;}
+  h2.sec{font-family:"Fraunces",Georgia,serif;font-size:clamp(27px,5.2vw,35px);font-weight:600;line-height:1.14;letter-spacing:-.015em;margin:0 0 22px;color:var(--ink);}
+  p{margin:0 0 20px;} p:last-child{margin-bottom:0;}
+  .lead{font-size:19px;color:var(--ink-soft);}
+  em{font-style:italic;} strong{font-weight:600;}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-soft);}
+  a:hover{border-bottom-color:var(--accent);}
+  .glance{background:var(--card);border:1px solid var(--hair);border-radius:16px;padding:6px 24px;margin:24px 0 4px;}
+  .glance .gr{display:grid;grid-template-columns:128px 1fr;gap:16px;padding:15px 0;border-bottom:1px solid var(--hair);align-items:baseline;}
+  .glance .gr:last-child{border-bottom:0;}
+  .glance .gk{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+  .glance .gv{font-size:16.5px;color:var(--ink);line-height:1.4;}
+  .glance .gv .num{font-family:var(--mono);color:var(--accent);font-weight:700;font-style:normal;font-size:15px;letter-spacing:-.02em;}
+  .glance .gv .sub{color:var(--muted);font-size:14px;}
+  .glance .gv.truth{font-family:"Fraunces",serif;font-style:italic;font-size:19px;color:var(--ink);}
+  .mirror-intro{color:var(--ink-soft);margin-bottom:24px;}
+  .tells{list-style:none;padding:0;margin:0 0 20px;display:flex;flex-direction:column;gap:10px;}
+  .tell{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--hair);border-radius:12px;padding:16px 18px;cursor:pointer;transition:border-color .15s,background .15s;user-select:none;}
+  .tell:hover{border-color:var(--accent-soft);}
+  .tell .box{flex:0 0 auto;width:20px;height:20px;border-radius:6px;border:1.8px solid var(--muted);margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+  .tell .box svg{width:12px;height:12px;opacity:0;transform:scale(.5);transition:all .15s;stroke:#fff;}
+  .tell.on{border-color:var(--accent);background:var(--accent-tint);}
+  .tell.on .box{background:var(--accent);border-color:var(--accent);}
+  .tell.on .box svg{opacity:1;transform:scale(1);}
+  .tell .txt{font-size:16.5px;line-height:1.5;color:var(--ink-soft);}
+  .tell.on .txt{color:var(--ink);}
+  .tell .txt b{color:var(--ink);font-weight:600;}
+  .mirror-read{font-size:15px;color:var(--muted);font-style:italic;min-height:1.5em;transition:color .2s;padding-left:2px;}
+  .mirror-read.warm{color:var(--accent);font-style:normal;font-weight:500;}
+  .segs{margin-top:20px;border:1px solid var(--hair);border-radius:14px;overflow:hidden;background:var(--card);}
+  .seg{padding:15px 20px;border-bottom:1px solid var(--hair);font-size:16px;color:var(--ink-soft);line-height:1.5;}
+  .seg:last-child{border-bottom:0;}
+  .seg .n{font-weight:600;color:var(--accent);}
+  .catalyst{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-direction:column;gap:0;border:1px solid var(--hair);border-radius:14px;overflow:hidden;background:var(--card);}
+  .catalyst li{padding:16px 20px;border-bottom:1px solid var(--hair);font-size:16px;color:var(--ink-soft);display:flex;gap:14px;align-items:baseline;}
+  .catalyst li:last-child{border-bottom:0;}
+  .catalyst li .n{font-family:"Fraunces",serif;font-size:14px;color:var(--accent);font-weight:600;flex:0 0 auto;}
+  .catalyst li b{color:var(--ink);font-weight:600;}
+  .somatic{margin-top:22px;padding:18px 20px;border-left:3px solid var(--accent-soft);background:#f9f2e2;border-radius:0 12px 12px 0;font-size:16px;color:var(--ink-soft);}
+  .vignette{background:#f9f2e2;border:1px solid var(--hair);border-radius:14px;padding:26px 28px;margin:4px 0 24px;}
+  .vignette .vt{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--accent);margin-bottom:12px;}
+  .vignette p{color:var(--ink-soft);font-size:16.5px;} .vignette p:last-child{margin-bottom:0;}
+  .aside{margin-top:22px;padding:20px 22px;border:1px solid var(--hair);border-radius:14px;background:var(--card);font-size:16.5px;color:var(--ink-soft);}
+  .aside .al{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:10px;}
+  .aside p:last-child{margin-bottom:0;}
+  .gap-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:6px 0 20px;}
+  .gap-col{border:1px solid var(--hair);border-radius:14px;padding:20px;background:var(--card);}
+  .gap-col.recv{border-color:var(--accent-soft);background:var(--accent-tint);}
+  .gap-col .gh{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:14px;color:var(--muted);}
+  .gap-col.recv .gh{color:var(--accent);}
+  .gap-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;}
+  .gap-col li{font-family:"Fraunces",serif;font-size:17px;color:var(--ink);line-height:1.3;}
+  .gap-col.recv li{color:var(--accent);}
+  .turn{text-align:center;padding:50px 0;}
+  .turn .mk{font-size:11.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:14px;}
+  .turn .mk::before,.turn .mk::after{content:"";width:34px;height:1px;background:var(--hair);}
+  .turn p{font-family:"Fraunces",serif;font-style:italic;font-size:clamp(19px,3.8vw,23px);color:var(--ink-soft);max-width:24em;margin:0 auto;line-height:1.4;}
+  .breath{padding:74px 0 70px;text-align:center;}
+  .breath p{font-family:"Fraunces",serif;font-style:italic;font-size:16.5px;color:var(--muted);margin:0;letter-spacing:.01em;}
+  .poles{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0 0;}
+  .pole-card{position:relative;border:1px solid var(--hair);border-radius:14px;padding:18px 20px;background:var(--card);}
+  .pole-card.me{border-color:var(--accent);background:var(--accent-tint);}
+  .pole-card .youtag{position:absolute;top:-10px;left:18px;background:var(--accent);color:#fff;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:3px 10px;border-radius:999px;}
+  .pc-dir{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:8px;}
+  .pc-name{font-family:"Fraunces",Georgia,serif;font-size:20px;font-weight:600;color:var(--ink);margin-bottom:9px;line-height:1.1;}
+  .pole-card.me .pc-name{color:var(--accent);}
+  .pc-desc{font-size:14.5px;color:var(--ink-soft);line-height:1.46;}
+  .dest{border-left:3px solid var(--accent);padding-left:22px;margin:4px 0;}
+  .dest h3{font-family:"Fraunces",Georgia,serif;font-size:22px;font-weight:600;color:var(--accent);margin:0 0 14px;letter-spacing:-.01em;}
+  .prompt-inward{margin-top:22px;background:var(--card);border:1px dashed var(--accent-soft);border-radius:12px;padding:16px 18px;font-size:15.5px;color:var(--ink-soft);}
+  .prompt-inward b{color:var(--accent);font-weight:600;}
+  .liveedge{background:var(--ink);color:#f3ede2;border-radius:16px;padding:38px 32px;margin:6px 0;}
+  .liveedge .le-lab{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-soft);font-weight:700;margin-bottom:18px;}
+  .liveedge .le-q{font-family:"Fraunces",Georgia,serif;font-size:clamp(21px,4.3vw,27px);font-weight:500;line-height:1.4;margin:0;letter-spacing:-.01em;}
+  .liveedge .le-q .n{color:#e2b968;font-family:var(--mono);font-size:.82em;letter-spacing:-.02em;}
+  .liveedge .le-note{margin-top:20px;font-size:14.5px;line-height:1.62;color:#b8b0a2;border-top:1px solid rgba(255,255,255,.14);padding-top:16px;}
+  .move{background:var(--card);border:1px solid var(--hair);border-radius:14px;padding:26px 28px;margin:4px 0 24px;}
+  .move .mlab{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--accent);margin-bottom:12px;}
+  .move .mbig{font-family:"Fraunces",Georgia,serif;font-size:21px;line-height:1.42;color:var(--ink);font-weight:500;margin:0 0 14px;}
+  .move .perm{font-size:15px;color:var(--muted);font-style:italic;margin:0;}
+  .rx{background:#f9f2e2;border:1px solid var(--hair);border-radius:14px;padding:8px 26px 22px;}
+  .rx-row{padding:18px 0;border-bottom:1px solid var(--hair);}
+  .rx-row:last-child{border-bottom:0;}
+  .rx-k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:7px;}
+  .rx-v{font-size:16px;color:var(--ink-soft);}
+  .rx-v b{color:var(--ink);font-weight:600;}
+  .rx-v .law{color:var(--accent);font-weight:600;}
+  .essays{list-style:none;padding:0;margin:8px 0 0;display:flex;flex-direction:column;gap:6px;}
+  .essays li{font-size:15.5px;color:var(--ink-soft);padding-left:18px;position:relative;font-style:italic;}
+  .essays li::before{content:"→";position:absolute;left:0;color:var(--accent-soft);font-style:normal;}
+  .metric{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:6px 0 0;}
+  .metric .m{border:1px solid var(--hair);border-radius:14px;padding:20px;background:var(--card);}
+  .metric .m .k{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:10px;}
+  .metric .m .v{font-family:"Fraunces",serif;font-size:19px;line-height:1.3;color:var(--ink);}
+  .metric .m.old .v{color:var(--muted);}
+  .metric .m.new{border-color:var(--accent-soft);background:#f7efdb;}
+  .metric .m.new .v{color:var(--accent);}
+  .weather{font-size:17px;color:var(--ink-soft);}
+  .weather .field-q{font-family:"Fraunces",Georgia,serif;font-style:italic;font-size:20px;color:var(--ink);display:block;margin:20px 0 10px;line-height:1.4;}
+  .axis-cap{font-size:14.5px;color:var(--muted);margin:0 0 16px;}
+  .axis-cap b.s{color:var(--clay);font-weight:600;} .axis-cap b.t{color:var(--sage);font-weight:600;}
+  .axis-table{border:1px solid var(--hair);border-radius:14px;overflow:hidden;background:var(--card);}
+  .axt-head,.axt-row{display:grid;grid-template-columns:76px 96px 1fr 96px;align-items:center;gap:12px;padding:13px 18px;}
+  .axt-head{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;background:#f9f2e2;border-bottom:1px solid var(--hair);}
+  .axt-head .sh{text-align:right;}
+  .axt-row{border-bottom:1px solid var(--hair);font-size:14.5px;} .axt-row:last-child{border-bottom:0;}
+  .axt-axis{font-weight:700;color:var(--ink-soft);}
+  .axt-shadow{color:var(--clay);text-align:right;font-weight:500;}
+  .axt-trans{color:var(--sage);font-weight:500;}
+  .axt-track{position:relative;height:6px;background:linear-gradient(90deg,var(--clay-soft),#e5ddcd 50%,var(--sage-soft));border-radius:5px;}
+  .axt-track .mk{position:absolute;top:50%;width:15px;height:15px;border-radius:50%;background:var(--card);border:3px solid var(--accent);transform:translate(-50%,-50%);box-shadow:0 1px 3px rgba(0,0,0,.16);}
+  .axd{display:block;font-size:10.5px;letter-spacing:0;text-transform:none;color:var(--muted);font-weight:400;margin-top:3px;line-height:1.25;font-style:italic;}
+  .speed{margin-top:24px;background:var(--card);border:1px solid var(--hair);border-radius:14px;padding:24px 26px;}
+  .speed .sh{font-family:"Fraunces",Georgia,serif;font-size:20px;font-weight:600;margin:0 0 6px;color:var(--ink);}
+  .speed .ss{font-size:15px;color:var(--muted);margin:0 0 18px;}
+  .speed-track{position:relative;height:12px;background:var(--hair);border-radius:8px;overflow:hidden;}
+  .speed-fill{position:absolute;left:0;top:0;height:100%;width:86%;background:linear-gradient(90deg,var(--sage),var(--gold));border-radius:8px;}
+  .speed-scale{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:8px;}
+  .speed-val{font-family:var(--mono);font-size:14px;color:var(--accent);font-weight:700;letter-spacing:-.02em;}
+  .power{background:linear-gradient(180deg,#f7efdb,#fffdf8);border:1px solid var(--accent-soft);border-radius:16px;padding:30px 30px;margin:6px 0 0;}
+  .power .pl{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--accent);margin-bottom:14px;}
+  .power h3{font-family:"Fraunces",serif;font-size:25px;font-weight:600;line-height:1.18;margin:0 0 16px;color:var(--ink);letter-spacing:-.01em;}
+  .power p{color:var(--ink-soft);font-size:16.5px;} .power p:last-child{margin-bottom:0;}
+  .power b{color:var(--ink);font-weight:600;}
+  .bridge{background:var(--card);border:1px solid var(--hair);border-radius:18px;padding:38px 32px;margin:20px 0 0;text-align:center;}
+  .bridge h2{font-family:"Fraunces",serif;font-size:28px;font-weight:600;margin:0 0 14px;letter-spacing:-.01em;line-height:1.2;}
+  .bridge p{color:var(--ink-soft);max-width:32em;margin:0 auto 26px;font-size:17px;}
+  .cta-tiers{display:flex;flex-direction:column;gap:12px;margin-top:6px;text-align:left;}
+  .cta-tier{border:1px solid var(--hair);border-radius:14px;padding:15px 18px;background:var(--paper);}
+  .cta-tier .ct-k{font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:5px;}
+  .cta-tier .ct-v{font-size:15px;color:var(--ink-soft);line-height:1.5;}
+  .cta-tier.primary{border-color:var(--accent);background:var(--accent-tint);}
+  .cta-tier.primary .ct-k{color:var(--accent);}
+  .btn{display:inline-block;background:var(--ink);color:var(--paper);font-weight:600;font-size:16px;letter-spacing:.01em;padding:16px 34px;border-radius:999px;text-decoration:none;border:0;transition:transform .12s,background .15s;}
+  .btn:hover{background:var(--accent);transform:translateY(-1px);}
+  .cta-tier .btn{margin-top:4px;}
+  footer{border-top:1px solid var(--hair);margin-top:56px;padding:32px 0 70px;}
+  footer .fine{font-size:13px;color:var(--muted);font-style:italic;line-height:1.7;max-width:40em;}
+  @media (max-width:560px){
+    body{font-size:16.5px;} .hero{padding:40px 0 22px;} .centerpiece{padding:42px 0 38px;}
+    .liveedge,.bridge,.power{padding:26px 22px;} .move,.rx,.speed{padding-left:20px;padding-right:20px;}
+    .gap-grid,.metric,.poles{grid-template-columns:1fr;} .glance .gr{grid-template-columns:1fr;gap:4px;padding:13px 0;}
+    .axt-head,.axt-row{grid-template-columns:60px 78px 1fr 78px;gap:8px;padding:12px 12px;font-size:12.5px;} .axt-head{font-size:9.5px;letter-spacing:.06em;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap"><span>#HowNotToUseAI · The Diagnostic</span><span class="r">Your Result</span></div></div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow"><span>The axis of authorship</span><span class="dot"></span><span class="pole">The integrated position</span></div>
+    <div class="pol-meta" style="font-family:var(--mono);font-size:11.5px;letter-spacing:.01em;color:var(--muted);margin:0 0 26px;">Reading time: 12 minutes</div>
+    <h1 class="name"><span class="the">You are</span>The Sovereign</h1>
+    <p class="unsoftened">Every other result in this diagnostic sits on one axis, between a gift under capture and the same gift with authorship restored. You did not land on an axis. You landed on the thing underneath all of them — you have restored authorship across the whole medium, and you have stopped performing your relationship to AI for anyone. You use it where it earns its place and refuse it where it does not, and the deciding has already concluded. The tell is quiet: <b>the explaining has stopped.</b> So read the next line before you let this feel like a prize. This is not a crown. It is a task placed in your hand.</p>
+  </header>
+
+  <div class="centerpiece"><p class="big">This is not a crown. It is a task placed in your hand.</p></div>
+
+  <!-- AUTHORSHIP DEFINITION -->
+  <section style="padding-bottom:6px;">
+    <p class="lead">Before the numbers, the word. One idea ran underneath all sixteen other results, and for you it is not a lesson — it is the ground you already stand on. <b>Authorship</b> is not how much you use the machine. It is who sets the terms. Whether you are the one shaping it, or it is quietly shaping you. You have set the terms for a while now, on every axis at once. Which is exactly why the quiz has nothing left to teach you about deciding — and one thing left to ask you about passing it on.</p>
+  </section>
+
+  <div class="glance">
+    <div class="gr"><span class="gk">Your result</span><span class="gv">The Sovereign · the integrated position across all eight axes</span></div>
+    <div class="gr"><span class="gk">The truth</span><span class="gv truth">You stopped explaining. Make sure you didn't stop teaching.</span></div>
+    <div class="gr"><span class="gk">Authorship</span><span class="gv"><span class="num" data-hn="authorship-pct">92%</span> &nbsp;<span class="sub">how much of the whole relationship with the machine you set the terms of — the highest band in the diagnostic</span></span></div>
+    <div class="gr"><span class="gk">Transmission</span><span class="gv"><span class="num">24%</span> &nbsp;<span class="sub">how much of your judgment is visible enough for another person to inherit</span></span></div>
+    <div class="gr"><span class="gk">Your one move</span><span class="gv">Draft your successor: explain one AI decision you'd normally make in silence to one person who is five steps behind you.</span></div>
+  </div>
+
+  <section>
+    <p class="lead">There is a quieter version of this result, and it is the real one, offered without flattery. You are not being congratulated, because a Sovereign page that leaves you feeling superior has failed you. What you have is genuinely rare: settledness in a culture that is still fighting. You feel a kind of quiet where other people feel the itch, the dread, the longing, the need to have a position. But that same settledness has a gravity, and it pulls one way — toward solitude. If you no longer need to explain, you can stop explaining. If you no longer need to be witnessed, you can stop showing your work. Each of those is a mature move. Each is also a small door closing between what you know and everyone still learning to see it.</p>
+  </section>
+
+  <!-- MIRROR -->
+  <section>
+    <div class="sec-num">The mirror</div>
+    <h2 class="sec">You were deciding from your own criteria long before the tool</h2>
+    <p class="mirror-intro">None of this started with AI. You have left a city, a job, a relationship, a platform, or an identity because it stopped meeting a standard you did not need anyone else to sign off on. That is the disposition underneath this whole result: criteria that survive speed, novelty, and the pressure of everyone else's certainty. AI did not create your authorship. It revealed how rare it is. Mark the ones you recognise.</p>
+    <ul class="tells" id="tells">
+      <li class="tell"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2"><path d="M5 12l5 5L19 7"/></svg></span><span class="txt">Someone asked your take on the AI debate and you realised you genuinely don't have one anymore — you said <b>"it's fine, I've decided"</b> and changed the subject.</span></li>
+      <li class="tell"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2"><path d="M5 12l5 5L19 7"/></svg></span><span class="txt">You use AI, reject most of what it gives you, keep the one useful piece, and never tell anyone you used it.</span></li>
+      <li class="tell"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2"><path d="M5 12l5 5L19 7"/></svg></span><span class="txt">The discourse got loud — mandate on one side, "slop" on the other — and you simply left the argument rather than pick a team.</span></li>
+      <li class="tell"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2"><path d="M5 12l5 5L19 7"/></svg></span><span class="txt">You have caught yourself thinking <b>"they wouldn't get it"</b> about someone who was, in fact, asking to learn.</span></li>
+      <li class="tell"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2"><path d="M5 12l5 5L19 7"/></svg></span><span class="txt">"I've moved past that" is a sentence you have used to end a conversation you could have had.</span></li>
+    </ul>
+    <p class="mirror-read" id="mirrorRead">The first three are the mastery. The last two are the door closing. Notice which ones you reached for.</p>
+  </section>
+
+  <!-- MICRO-SEGMENTS -->
+  <section>
+    <div class="sec-num">Same position, different silence</div>
+    <h2 class="sec">You are probably holding it in one of these ways</h2>
+    <p>The Sovereign is one settledness, kept in a few different silences. Most of these are the gift at rest. One is the door already half-closed — and which silence is most yours tells you how near the isolation is.</p>
+    <div class="segs">
+      <div class="seg"><span class="n">The Post-Performer.</span> You've opted out of signalling either enthusiasm or refusal, in a room where everyone else is signalling one.</div>
+      <div class="seg"><span class="n">The Congruent Operator.</span> Your outer practice and your inner criteria match exactly, and the absence of drama is the whole point.</div>
+      <div class="seg"><span class="n">The Quiet Refuser.</span> You've walled certain things off from the tool — care, the interior life, the consequential call — and you no longer relitigate any of it.</div>
+      <div class="seg"><span class="n">The Reference Point.</span> People calibrate against your judgment whether or not you offer it — you are already teaching, silently, and mostly by accident.</div>
+      <div class="seg"><span class="n">The One Who Moved Past It.</span> This is the door closing. "I've moved past that conversation" has started to excuse you from the people still in it.</div>
+    </div>
+  </section>
+
+  <!-- CATALYST -->
+  <section>
+    <div class="sec-num">Where the door closes</div>
+    <h2 class="sec">When settledness tips into absence</h2>
+    <p>The withdrawal does not announce itself as withdrawal. It arrives wearing the face of maturity, and it fires at specific moments. Watch for these four. One of them is where your quiet stops being peace and starts being a wall.</p>
+    <ol class="catalyst">
+      <li><span class="n">01</span><span><b>The junior's question.</b> Someone asks how you decide when AI helps and when it robs the work. You feel the pull to say "you'll get a feel for it" and move on. That pull is the diagnosis.</span></li>
+      <li><span class="n">02</span><span><b>The avoidable mistake.</b> A colleague makes exactly the error your criteria would have caught. You think "I could have told them." You didn't. You'd moved past that conversation.</span></li>
+      <li><span class="n">03</span><span><b>The loud discourse.</b> The argument flares, and you exit rather than engage — efficient self-protection that shades, unnoticed, into leaving the room for good.</span></li>
+      <li><span class="n">04</span><span><b>The skipped note.</b> The "why I decided this" explanation feels like overhead to a mind that decides instantly, so you compress it away — and the reasoning that could have taught someone is gone.</span></li>
+    </ol>
+    <div class="somatic">The tell is in the stillness. The Sovereign's body is quiet where other people's bodies carry pressure — no restlessness, no dread, no anxious tinkering. That quiet is a genuine achievement. Learn its second version, though: the moment the quiet of resolution slides into the quiet of not being reached. One is peace. The other is a person no one can get to anymore, feeling exactly like peace from the inside.</div>
+  </section>
+
+  <!-- COST -->
+  <section>
+    <div class="sec-num">The one cost worth naming</div>
+    <h2 class="sec">Everything you know ends with you.</h2>
+    <p>Here is the trap in one line, and it is subtler than any other archetype's because it wears the costume of maturity. Your trap is not the noise you opted out of. It is your own vault. You think keeping your judgment to yourself is a form of integrity, when a good part of it is just a polite word for hoarding. You have built a flawless internal compass, and if you never teach anyone to read it, that brilliance is functionally useless to everyone but you. The most dangerous thing here is that the deskilling feels like wisdom: judgment kept inside one head cannot be inherited or even checked by its owner, so it can quietly ossify while the feeling of sovereignty stays fully intact. You are the one others trust because they can tell judgment was applied. When you go, it goes with you, and no one you worked beside can reproduce it. A mastery that leaves no heirs is just a footnote.</p>
+    <div class="vignette">
+      <div class="vt">The decision no one saw</div>
+      <p>You use the model, reject nine-tenths of what it hands back, keep the one piece that clears your bar, and finish the work. It is good. Everyone can tell it is good. What no one can tell is <em>how</em> — which criterion you applied, what you threw away and why, where you drew the line the tool was not allowed to cross. The privacy is congruent with who you are. It is also invisible, and invisible judgment teaches no one. Sovereignty without transmission is just private competence. A standard that dies with you is not a legacy. It is just intellectual hoarding. Read that twice. A standard that dies with you is not a legacy — it is just intellectual hoarding.</p>
+    </div>
+    <div class="aside">
+      <div class="al">One honest thing about who gets to be settled</div>
+      <p>Some of what reads as Sovereign maturity is downstream of latitude. It is easier to refuse a tool on principle when you can afford the refusal; under a hard mandate, saying no has a cost that a more secure person never pays. So this page will not launder economic freedom as personal wisdom. If your settledness is partly the privilege of being able to say no without consequence, that is worth knowing plainly — it does not cancel the judgment, but it should keep the judgment humble about who can copy it.</p>
+    </div>
+    <div class="aside">
+      <div class="al">And one thing this page will not shame you for</div>
+      <p>For some readers, "I no longer explain myself" is not disengagement. It is a hard-won refusal to keep justifying your competence to people who never extended you the benefit of the doubt. If your quiet is that — the exhausted, dignified end of translating yourself for sceptics who were never going to listen — keep it. That is self-respect, and it is not the trap. The line is only this: refusing to justify yourself to sceptics is not the same as refusing to teach the one person who genuinely wanted to learn. Protect the first. Watch the second.</p>
+    </div>
+  </section>
+
+  <!-- PERCEPTION -->
+  <section>
+    <div class="sec-num">The gap inside the strength</div>
+    <h2 class="sec">What the silence feels like it protects, and what it actually costs</h2>
+    <p>There is a distance between what keeping your judgment private feels like it is giving you and what it is actually producing. You have been feeling the first. Here is the second.</p>
+    <div class="gap-grid">
+      <div class="gap-col">
+        <div class="gh">What the silence feels like</div>
+        <ul><li>Focus</li><li>Maturity</li><li>Peace</li><li>Integrity</li></ul>
+      </div>
+      <div class="gap-col recv">
+        <div class="gh">What it actually costs</div>
+        <ul><li>Mastery no one can see</li><li>A standard with no heir</li><li>A mind no one can reach</li><li>Judgment that dies with you</li></ul>
+      </div>
+    </div>
+    <p>The privacy is real integrity — and it is also the exact mechanism by which the most valuable thing you have becomes worthless to everyone but you. You believe judgment is the scarcest resource of this era. You are right. And keeping yours entirely to yourself is the one move guaranteed to make it end when you do.</p>
+  </section>
+
+  <!-- BREATH -->
+  <div class="breath"><p>Take a breath here.<br>This one is not a wound. It is a responsibility.</p></div>
+
+  <!-- GIFT -->
+  <section>
+    <div class="sec-num">Before the way onward, the gift</div>
+    <h2 class="sec">You can hold a decision the world hasn't ratified</h2>
+    <p>Here is the part the whole diagnostic was building toward. You can decide, and stay decided, without needing anyone to agree. Hype does not move you. Doom does not move you. Flattery bounces off a person who never wanted the machine's approval in the first place. That is the completed form of every axis at once — the Trickster's ownership of the terms, the Auteur's grip on the risk of voice, the Humanist's knowing what time is for, the Creatrix's curation of emergence, the Diviner's holding of ambiguity, the Kin Builder's authorship of belonging, the Worldbuilder's building of what others can enter — all of it held by one person who has stopped needing to be seen holding it. The gift is settled authorship. The only question the axis has left for you is not whether you have it. It is whether it stays with you, or passes on.</p>
+    <div class="poles">
+      <div class="pole-card me"><span class="youtag">You are here</span><div class="pc-dir">Keep the criteria</div><div class="pc-name">Private mastery</div><div class="pc-desc">I decide on my own terms, apply the judgment silently, and answer to no one for it. Real, rare, and finite.</div></div>
+      <div class="pole-card"><div class="pc-dir">Pass the criteria on</div><div class="pc-name">Transmission</div><div class="pc-desc">I make the judgment visible enough for another person to inherit — so the standard outlives my own use of it.</div></div>
+    </div>
+    <p style="margin-top:20px;">Same sovereignty, two fates. The gift is not the settledness — you already have that. The gift completes itself in a lineage, not a state. And the move from the first card to the second costs you far less than you think, because you are already a reference point; people are already calibrating against you. Transmission is mostly a matter of letting them see the working.</p>
+  </section>
+
+  <!-- TURN -->
+  <div class="turn"><div class="mk">The turn</div><p>You are allowed to be settled. Nothing here asks you to reopen a case you have rightly closed, or to perform a position you have earned the right to drop. The turn is not backward, into the argument. It is outward, toward the one person who could inherit what you know.</p></div>
+
+  <!-- NEXT EDGE -->
+  <section>
+    <div class="sec-num">Your next work</div>
+    <div class="dest">
+      <h3>Transmission</h3>
+      <p>Your axis has no far pole to cross to — you have already crossed them all. What it has instead is a next work, and it is the one thing your settledness quietly skipped. The culture is busy codifying it without naming it: every serious account of AI literacy now puts judgment above tool-use, and puts <em>teaching that judgment to others</em> at the very top of the ladder — the expert tier is not using the tool well, it is making your criteria legible enough that someone else can situate the next tool for themselves. That top rung is the exact one private mastery steps over. The work is not to decide better. You decide fine. It is to make your deciding visible enough to be inherited.</p>
+      <p>The move is smaller than it sounds, and more humbling. Externalise one criterion you apply without thinking. Say out loud where you stop, when you escalate, what you treat as risk — the tacit judgment juniors used to learn by watching a senior think aloud, and now mostly do not, because the thinking happens silently and instantly inside people like you. You are not lowering yourself by explaining. You are keeping a standard alive past the length of your own attention.</p>
+      <div class="prompt-inward">
+        <b>For later.</b> Ask the sharpest question on this page: if you vanished from your work tomorrow, could anyone reconstruct how you decide? If the answer is no, that is not proof of how rare you are. It is the measure of how much is about to be lost.
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE EDGE -->
+  <section>
+    <div class="sec-num">Your live edge</div>
+    <div class="liveedge">
+      <div class="le-lab">The gap the 30 days are built for</div>
+      <p class="le-q">Your authorship reads at <span class="n">86%</span> — the highest band in the diagnostic. Your transmission reads at <span class="n">24%</span>. That gap is the whole result. It is not a gap in your judgment, which is settled and rare. It is a gap in its reach — the distance between a standard you hold perfectly and a standard anyone else can learn.</p>
+      <p class="le-note">Authorship measures how much of the relationship with the machine you set the terms of. Transmission measures how much of that judgment is visible enough to be inherited — written down, taught, shown. High authorship with low transmission is the exact signature of the isolated master: the last carrier of a standard, respected and finite. Read the gap not as a failing but as your next assignment. These figures come from how you actually answered.</p>
+    </div>
+  </section>
+
+  <!-- ONE MOVE + READING -->
+  <section>
+    <div class="sec-num">One move, doable on a Tuesday</div>
+    <div class="move">
+      <div class="mlab">This week</div>
+      <p class="mbig">Draft your successor. Take the most nuanced, split-second AI decision you made this week — what you kept, what you rejected, the line you drew and why — and explain it out loud to one person who is five steps behind you. Break it down until it feels tedious. Suffer the friction of teaching, the humbling work of dragging someone up the mountain you climbed alone. And when the words come out clumsier than you expected, notice that — it means the judgment you called obvious was hiding real complexity, and that complexity is exactly what they needed to see. Your silence is not protecting your peace anymore. It is starving the people who could carry what you know.</p>
+      <p class="perm">This will itch, because your native mode is to evaluate rather than reveal, and explaining feels beneath a mind that has moved past the argument. Notice that objection — it <em>is</em> the pattern, the same reflex that quietly walls your judgment off from everyone who could carry it. The point is not to prove you are settled. You are. The point is to prove, once, that what you know can live in more than one head.</p>
+    </div>
+    <div class="rx">
+      <div class="rx-row">
+        <div class="rx-k">Read first</div>
+        <div class="rx-v"><span class="law">Law 29 — Design Your Graduation.</span> The direct antidote to a mastery that depends on you and only you — it turns a settled instinct into something repeatable, something another person could graduate into. Then <span class="law">Law 42 — Join the Underground</span>, which keeps sovereignty relational rather than a private fortress, and <span class="law">Law 50 — Grow What Makes It Obsolete</span>, which points the whole of your authorship outward, toward what others inherit instead of what you alone hold.</div>
+      </div>
+      <div class="rx-row">
+        <div class="rx-k">The deeper pattern</div>
+        <div class="rx-v">You were deciding from your own criteria long before AI — leaving what failed your standard, keeping what met it, answering to no one. The tool only revealed how rare that is. The work now is not sharper judgment. It is turning the invisible standard into a legible one: a Code of Use, a documented rationale, one apprentice — so that authorship stops being a state you occupy alone and becomes a lineage someone can join.</div>
+      </div>
+      <div class="rx-row">
+        <div class="rx-k">Try today</div>
+        <div class="rx-v"><b>The Code of Use</b> (Day 25): write down, once, the standard you apply silently — how you see the medium, what earns AI a place, the zones you refuse it, the zones you engage it, and what the whole practice is in service of. Make the invisible legible. It is the first artefact anyone else could ever learn from.</div>
+      </div>
+      <div class="rx-row">
+        <div class="rx-k">If this named something in you, read these in order</div>
+        <ul class="essays">
+          <li>The Medium Is Not Just the Message. It's Your Only Move.</li>
+          <li>Big Tech Does Not Own AI</li>
+          <li>The Intelligence Was Always Yours</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- COUNTER-METRIC -->
+  <section>
+    <div class="sec-num">How you will know it is working</div>
+    <h2 class="sec">The feeling you are aiming for</h2>
+    <p>You have a signal already, and it is a good one — it is just pointed inward. For a long time the satisfaction was the quiet of the closed case: the argument settled, the criteria firm, nothing left to prove. Aim it one step outward.</p>
+    <div class="metric">
+      <div class="m old"><div class="k">The old signal</div><div class="v">The peace of the settled case. Nothing left to argue, nothing left to prove.</div></div>
+      <div class="m new"><div class="k">The new signal</div><div class="v">Someone else catching what you catch — your criteria showing up in another person's judgment.</div></div>
+    </div>
+    <p style="margin-top:20px;">Here is the shape of the return, so you know it when it comes. The first change is small: the mild discomfort of explaining something you would normally keep internal. Then a surprise — that "obvious" was hiding more than you thought, that your criteria were less articulate than you assumed. Then, later, the unfamiliar and specific satisfaction of watching someone reason the way you reason, catch what you would have caught, decide as you would have decided. When your judgment appears in a mind that is not yours, the transmission is working. Chase that, not the quiet.</p>
+  </section>
+
+  <!-- WHERE THE AGENCY ALREADY LIVES -->
+  <section>
+    <div class="sec-num">You are not starting from nothing</div>
+    <h2 class="sec">Where the transmission already lives in you</h2>
+    <p>You do not have to manufacture the capacity to pass this on. You already do it in places — quietly, half by accident — and the work is to make the accidental deliberate. Go and find where your judgment already reaches another person, and do it on purpose.</p>
+    <ol class="catalyst">
+      <li><span class="n">01</span><span>The person who already calibrates against you — who checks their instinct against what they imagine you would say. You are teaching them already, invisibly. Make one lesson visible.</span></li>
+      <li><span class="n">02</span><span>The time you did explain a decision you'd normally keep silent, and watched it land. You know the feeling of transmission working. You have simply not repeated it on purpose.</span></li>
+      <li><span class="n">03</span><span>The standard you protect most fiercely — the line the tool may never cross. You could name it in one sentence. That sentence is the beginning of a Code someone else could live by.</span></li>
+      <li><span class="n">04</span><span>The younger version of you who would have given anything to watch someone with your judgment think aloud. Someone near you is that person now. They are still waiting.</span></li>
+    </ol>
+    <p style="margin-top:20px;">That silent apprentice, that one landed explanation, that fiercely held line — that is the lineage already forming around you, waiting only for you to turn and acknowledge it.</p>
+  </section>
+
+  <!-- CULTURAL ZEITGEIST -->
+  <section>
+    <div class="sec-num">You are not the only one standing here</div>
+    <h2 class="sec">The cultural zeitgeist</h2>
+    <p class="weather">You are standing in a discourse that has hardened into two performances, and you have opted out of both — which is exactly why the position is rare. On one side, adoption is mandated and moralised: use the tool or lose the job, with adoption folded into performance reviews. On the other, refusal has become an aesthetic and moral identity, complete with a race to build a certified "human-made" label. Both poles are ways of signalling a position. You are not signalling anything, and in a culture where everyone is, that reads as the rarest thing in the room — post-performance, unbothered, congruent.</p>
+    <p class="weather">But the same moment that makes your settledness rare is the one that most tempts you to disappear into it. Here is the sharp part, and it is aimed at your pride, because that is the only place advice lands for someone who has metabolised all of it already. The culture is quietly codifying transmission as the summit of AI literacy — the ability to teach the judgment, not merely to hold it — and that is the precise rung private mastery steps over. Even the sceptical young are drifting toward your discernment: trusting work made without AI far more than work made by it. The instinct you arrived at alone is becoming the shared standard. And your quiet is no longer neutral. While you sit in your congruent peace, the room fills with sycophantic bots and confident bad advice — and when the people with the most judgment refuse to teach, the room is simply handed to whoever holds the loudest microphone. Opting out stopped being wisdom the moment your silence started costing everyone else.
+      <span class="field-q">You didn't win the argument about AI. You left it. Leaving isn't the same as teaching anyone.</span>
+      Which raises the only question left for the person who has answered every other one: do you transmit what you know, or does it end with you?
+    </p>
+  </section>
+
+  <!-- PROFILE -->
+  <section>
+    <div class="sec-num">Where you stand across all eight axes</div>
+    <h2 class="sec">Your profile</h2>
+    <p class="axis-cap">The Sovereign is not one loud signal. It is the whole line at once. On every axis, the left is the <b class="s">shadow pole — where people hide</b>, the right is the <b class="t">transmuted pole — where people lead</b>, and the marker is you.</p>
+    <div class="axis-table">
+      <div class="axt-head"><span>Axis</span><span class="sh">Shadow</span><span>Your position</span><span>Transmuted</span></div>
+      <div class="axt-row"><span class="axt-axis">Vision<span class="axd">certainty or the open future</span></span><span class="axt-shadow">Fatalist</span><span class="axt-track"><i class="mk" data-hn-axis="VIS" style="left:50%;opacity:0.56"></i></span><span class="axt-trans">Diviner</span></div>
+      <div class="axt-row"><span class="axt-axis">Value<span class="axd">time and self-worth</span></span><span class="axt-shadow">Hustler</span><span class="axt-track"><i class="mk" data-hn-axis="VAL" style="left:50%;opacity:0.56"></i></span><span class="axt-trans">Humanist</span></div>
+      <div class="axt-row"><span class="axt-axis">Voice<span class="axd">the risk of being seen</span></span><span class="axt-shadow">Automaton</span><span class="axt-track"><i class="mk" data-hn-axis="VOI" style="left:50%;opacity:0.56"></i></span><span class="axt-trans">Auteur</span></div>
+      <div class="axt-row"><span class="axt-axis">Agency<span class="axd">the body as compass</span></span><span class="axt-shadow">Captive</span><span class="axt-track"><i class="mk" data-hn-axis="AGY" style="left:50%;opacity:0.56"></i></span><span class="axt-trans">Cultivator</span></div>
+      <div class="axt-row"><span class="axt-axis">Boundaries<span class="axd">taste as door or fence</span></span><span class="axt-shadow">Purist</span><span class="axt-track"><i class="mk" data-hn-axis="BND" style="left:50%;opacity:0.56"></i></span><span class="axt-trans">Trickster</span></div>
+      <div class="axt-row"><span class="axt-axis">Partnership<span class="axd">who authors belonging</span></span><span class="axt-shadow">Companion</span><span class="axt-track"><i class="mk" data-hn-axis="PAR" style="left:50%;opacity:0.56"></i></span><span class="axt-trans">Kin Builder</span></div>
+      <div class="axt-row"><span class="axt-axis">Flow<span class="axd">control or emergence</span></span><span class="axt-shadow">Controller</span><span class="axt-track"><i class="mk" data-hn-axis="FLW" style="left:50%;opacity:0.56"></i></span><span class="axt-trans">Creatrix</span></div>
+      <div class="axt-row"><span class="axt-axis">Changemaking<span class="axd">critique or building</span></span><span class="axt-shadow">Reformer</span><span class="axt-track"><i class="mk" data-hn-axis="CHG" style="left:50%;opacity:0.56"></i></span><span class="axt-trans">Worldbuilder</span></div>
+    </div>
+    <p class="axis-cap" style="margin:16px 0 0;">This is the signature, and it is the whole point. Not one axis pulled toward authorship while the rest stay in shadow — the entire line pulled right, together. That is what the Sovereign is: not a specialism, but every gift held on your own terms at once. It is also why the risk is what it is. A person this settled across the board has nothing left to fight and no one left to convince, which is precisely the condition in which a person goes quiet and then goes missing.</p>
+    <div class="speed">
+      <p class="sh">Your authorship reads at <span data-hn="authorship-pct">92%</span></p>
+      <p class="ss">Read this as speed, not a grade. It is how fast you are already moving on your own ground — and you are moving almost entirely under your own power, which is genuinely rare. The marketplace of certainty barely authors you at all. The last stretch to the right is not more authorship. It is reach: the part of your judgment that becomes another person's.</p>
+      <div class="speed-track"><div class="speed-fill" data-hn="dial" style="width:92%"></div></div>
+      <div class="speed-scale"><span>authored by the discourse</span><span class="speed-val" data-hn="authorship-pct">92%</span><span>authored by you</span></div>
+    </div>
+  </section>
+
+  <!-- SUPERPOWER -->
+  <section>
+    <div class="power">
+      <div class="pl">What the authorship gave you</div>
+      <h3>You can hold a decision without needing the world to ratify it — now let one other person hold it too.</h3>
+      <p>Do not let this page talk you out of your settledness. The capacity to decide and stay decided, unmoved by hype or doom or flattery, is the rarest thing in this entire diagnostic, and you earned it the hard way — across every axis, one closed case at a time. It is not coldness and it is not arrogance. It is authorship, complete. Kept for yourself, it is a mastery that benefits exactly one person and lasts exactly one lifetime. Turned outward, it becomes the thing the culture is now scrambling to build — inheritable judgment, a standard that lives in more than one head. A crown locked in a vault is just a piece of metal; a standard no one else can carry is just a private habit, however refined.</p>
+      <p>And say the finishing part plainly, because it is the only part that is urgent for you. You believe judgment is the most valuable thing in the AI era, and you are doing the one thing guaranteed to make yours worthless: keeping it to yourself. <b>The 30 days do not ask you to learn the tool — you have nothing left to learn there. They ask you to make sure what you already know does not end with you.</b> You have done the hardest part. You decided. The only work left is the part you skipped: making it inheritable. This is not a course about the tool. It is about the lineage.</p>
+    </div>
+  </section>
+
+  <!-- BRIDGE -->
+  <div class="bridge">
+    <h2>The 30 days are not about the tool.</h2>
+    <p>You have nothing left to learn about using AI, so treat this as a succession plan, not a course. What you have not built is the channel out of your own head — the Code, the apprentice, the documented judgment that lets what you know outlive your use of it. Weeks 4 and 5 are The Hearth and Liberation, built for exactly this: turning private sovereignty into something a village can inherit.</p>
+    <div class="cta-tiers">
+      <div class="cta-tier primary">
+        <div class="ct-k">If you are ready</div>
+        <div class="ct-v"><a href="https://abiawomosu.substack.com/p/the-hownottouseai-30-day-challenge" target="_blank" rel="noopener" class="btn">Build the Lineage · Start the 30-Day Challenge</a></div>
+      </div>
+      <div class="cta-tier">
+        <div class="ct-k">If thirty days is too much right now</div>
+        <div class="ct-v">This week, explain one AI decision you'd normally make in silence to one person who wanted to know — what you kept, what you rejected, why. Notice how loudly "they wouldn't get it" argues, and do it anyway. That argument is the whole trap, and moving through it once is the whole opening.</div>
+      </div>
+      <div class="cta-tier">
+        <div class="ct-k">If you want nothing else</div>
+        <div class="ct-v">Keep this page. It is yours to hold, and it will still be here when you are ready to turn and teach.</div>
+      </div>
+    </div>
+    <p style="font-weight:500;color:var(--ink);max-width:34em;margin:24px auto 0;">The machine will never author your judgment; you settled that long ago, and no terrain holds you. That freedom is the gift. It is also, quietly, how you disappear. Keep the sovereignty, show the working, and the standard you built alone becomes a standard someone else gets to carry.</p>
+  </div>
+
+</div>
+
+<footer><div class="wrap"><p class="fine">This is a lens, not a box. It reflects how you answered today, not who you are for good. #HowNotToUseAI · The Diagnostic.</p></div></footer>
+
+<script>
+  var tells = document.querySelectorAll('#tells .tell');
+  var read = document.getElementById('mirrorRead');
+  var base = "The first three are the mastery. The last two are the door closing. Notice which ones you reached for.";
+  function refresh(){
+    var n = document.querySelectorAll('#tells .tell.on').length;
+    if(n===0){ read.textContent = base; read.classList.remove('warm'); return; }
+    read.classList.add('warm');
+    if(n===1) read.textContent = "One landed. If it was a mastery line, trust it. If it was a door-closing line, that is the whole assignment.";
+    else if(n<=3) read.textContent = n + " of these are you. That is a genuinely settled person — now watch the two about the door, because that is where the settledness costs you.";
+    else read.textContent = n + " of five. The mastery is complete and the door is already half-closed, which means the only work left is turning outward before it shuts.";
+  }
+  tells.forEach(function(t){ t.addEventListener('click', function(){ t.classList.toggle('on'); refresh(); }); });
+</script>
+
+<!-- HNTUAI hydration: fills numbers from the real result in sessionStorage. -->
+<script>
+/* ============================================================================
+   HNTUAI — RESULT CONTRACT  v1
+   The single source of truth between the diagnostic engine and the 17 pages.
+
+   Engine emits (per HNTUAI_Quiz_Build_Brief v1.2 §6):
+     { result_type, archetype, dominant_arc, dominant_pole,
+       sovereign_pct, sovereign_level, arcs:[{arc, shadow_pct,
+       transmuted_pct, activation, lean}] }
+
+   Pages consume: two headline numbers, one branching live-edge sentence,
+   an authorship dial, and 8 profile markers.
+
+   SEMANTICS (resolved against the built reference pages):
+     "Voice %"      = dominant arc's  transmuted_pct   (0-100)
+                      page's own words: "how much of your own unmediated
+                      perspective reaches the finished work"
+     "Authorship %" = sovereign_pct                     (0-100)
+     profile marker = each arc's      transmuted_pct    (0-100)
+                      shadow pole at 0, transmuted pole at 100
+
+   Framework-free. Same file runs in the browser and in node.
+   ========================================================================== */
+
+(function (root, factory) {
+  if (typeof module === "object" && module.exports) module.exports = factory();
+  else root.HNTUAI = factory();
+})(typeof self !== "undefined" ? self : this, function () {
+
+  /* ---- the 8 axes, shadow pole -> transmuted pole ---------------------- */
+  const AXES = {
+    BND: { name: "Boundaries",   shadow: "The Purist",           transmuted: "The Trickster" },
+    AGY: { name: "Agency",       shadow: "The Captive",          transmuted: "The Cultivator" },
+    VOI: { name: "Voice",        shadow: "The Automaton",        transmuted: "The Auteur" },
+    CHG: { name: "Changemaking", shadow: "The Reformer",         transmuted: "The Worldbuilder" },
+    VAL: { name: "Value",        shadow: "The Hustler",          transmuted: "The Humanist" },
+    FLW: { name: "Flow",         shadow: "The Controller",       transmuted: "The Creatrix" },
+    VIS: { name: "Vision",       shadow: "The Fatalist",         transmuted: "The Diviner" },
+    PAR: { name: "Partnership",  shadow: "The Companion Seeker", transmuted: "The Kin Builder" },
+  };
+
+  /* ---- archetype -> page slug (filenames use the bare name) ------------- */
+  const SLUG = {
+    "The Purist": "purist",                   "The Trickster": "trickster",
+    "The Captive": "captive",                 "The Cultivator": "cultivator",
+    "The Automaton": "automaton",             "The Auteur": "auteur",
+    "The Reformer": "reformer",               "The Worldbuilder": "worldbuilder",
+    "The Hustler": "hustler",                 "The Humanist": "humanist",
+    "The Controller": "controller",           "The Creatrix": "creatrix",
+    "The Fatalist": "fatalist",               "The Diviner": "diviner",
+    "The Companion Seeker": "companion-seeker","The Kin Builder": "kin-builder",
+    "The Sovereign": "sovereign",
+  };
+
+  /* ---- live-edge branching --------------------------------------------
+     The built copy asserts a RELATIONSHIP between two numbers
+     ("you are already leaning further than you are standing"), which is only
+     true when axisPct > authorshipPct. With live numbers that flips, so the
+     sentence must branch. ALIGN_BAND is the "same place" tolerance.
+
+     NB: the two non-default variants are scaffolding — they carry the logic,
+     not the register. Run them through the Voice Gate before shipping.      */
+  const ALIGN_BAND = 6;
+  const CONTRADICT_BAND = 12;
+
+  function liveEdge(view) {
+    const { axisPct, authorshipPct, pole, axisName, transmutedName, shadowName, lean } = view;
+    const gap = axisPct - authorshipPct;
+    // "X% toward the Auteur" only parsed while the number was a quantity. On a
+    // scale whose midpoint is 50, "50% toward the Auteur" is nonsense — so the
+    // head names the line the number sits on. voiced.
+    const head = `Your ${axisName} sits at <span class="n">${axisPct}%</span> between the ` +
+                 `${stripThe(shadowName)} and the ${stripThe(transmutedName)}. ` +
+                 `Your authorship reads at <span class="n">${authorshipPct}%</span>.`;
+
+    if (pole === "transmuted") {
+      // The pole is assigned by authorship alone. When the axis itself leans
+      // hard the OTHER way, "you are here" is false — the person endorsed the
+      // shadow items and skipped the transmuted ones. Never claim arrival.
+      if (lean <= -CONTRADICT_BAND) {
+        return {
+          variant: "arrived-contradicted",   // voiced
+          divergent: true,
+          html: `${head} Your authorship is real, and it is yours. This is the one axis it has not reached yet. Everywhere else, you set the terms — here, you are still letting them be set for you.`,
+        };
+      }
+      return { variant: "arrived", divergent: false,
+               html: `${head} You are not on your way here. You are here.` };
+    }
+    if (gap >= ALIGN_BAND) {
+      return { variant: "leaning-ahead", divergent: false,   // the canonical case the copy was written for
+               html: `${head} You are already leaning further than you are standing.` };
+    }
+    if (gap <= -ALIGN_BAND) {
+      return {
+        variant: "standing-ahead",  // voiced
+        divergent: false,
+        html: `${head} You have already claimed this ground. You are just not standing on it yet.`,
+      };
+    }
+    return {
+      variant: "aligned",           // voiced
+      divergent: false,
+      html: `${head} The two are standing level. Neither one is pulling the other forward yet.`,
+    };
+  }
+
+  function stripThe(s) { return s.replace(/^The\s+/, ""); }
+
+  /* ---- position on the axis --------------------------------------------
+     WHY LEAN, NOT transmuted_pct.
+     transmuted_pct answers "how much did you endorse the transmuted items" —
+     a QUANTITY. Plotting it on a shadow->transmuted line silently assumes that
+     not endorsing the transmuted pole means you sit AT the shadow pole. False:
+     you may not have endorsed the shadow pole either. A respondent who mildly
+     agreed with one Captive item and no Cultivator items has transmuted_pct 0
+     and lands pinned at the absolute Captive pole — from a shrug.
+
+     lean = transmuted% − shadow%, so it is a genuine balance between the two.
+     Mapped here to 0..100 with 50 = the true midpoint.
+     The build brief agrees: "their Voice Lean of +49 toward Auteur is surfaced
+     as the live edge."  It is lean that is directional, not transmuted_pct.
+
+     It also makes the two headline numbers commensurable: authorship 50% means
+     "neutral" and axis 50% now also means "neutral", so the live edge compares
+     like with like. Against transmuted_pct it was comparing two different scales. */
+  function leanPos(lean) { return Math.round((lean + 100) / 2); }
+
+  /* lean alone cannot tell "torn" (shadow 67 / transmuted 67) from "indifferent"
+     (0 / 0) — both sit at the midpoint. Activation carries that, so the marker
+     is drawn at leanPos and weighted by how charged the axis is. */
+  function intensity(activation) {
+    return Math.max(0.28, Math.min(1, activation / 120));
+  }
+
+  /* ---- the authorship dial's reading ----------------------------------
+     The built copy reads the number, not just prints it ("An Automaton at 41%
+     is guarding something real and moving with care"). That sentence is only
+     true in a band. Each SHADOW page only ever sees authorship 0-69 (above 70
+     the engine sends you to the transmuted pole), and each TRANSMUTED page only
+     ever sees 70-100 — so each page needs three bands, not the whole range.
+
+     Scaffolding copy: carries the banding, not the register. voiced. */
+  function speedRead(view) {
+    const { authorshipPct: p, pole, archetype } = view;
+    const who = "A" + (/^[AEIOU]/.test(stripThe(archetype)) ? "n" : "") + " " + stripThe(archetype);
+    if (pole === "shadow") {
+      if (p < 30) return { band: "low",
+        text: `${who} at ${p}% is deep in the pattern — most of the terms are still being set for you. That is worth knowing plainly, not worth panicking about.` };
+      if (p < 55) return { band: "mid",
+        text: `${who} at ${p}% is guarding something real and moving with care. Exactly the place to begin from.` };
+      return { band: "high",
+        text: `${who} at ${p}% is closer to the turn than they think. Most of this ground is already yours; the habit has not caught up to the authorship.` };
+    }
+    if (p < 80) return { band: "low",
+      text: `${who} at ${p}% has crossed, and recently. The terms are yours — holding them under pressure is the work now.` };
+    if (p < 92) return { band: "mid",
+      text: `${who} at ${p}% is standing on ground they set themselves. The edge is no longer whether you can hold it.` };
+    return { band: "high",
+      text: `${who} at ${p}% authors almost the whole relationship. The risk at this altitude is forgetting it was ever difficult.` };
+  }
+
+  /* ---- main -------------------------------------------------------------
+     result : engine output object
+     page   : { archetype } — the page this is being rendered into
+     returns a view model, or { ok:false, reason } when the page must not render */
+  function buildView(result, page) {
+    if (!result || !result.result_type) return { ok: false, reason: "no-result" };
+
+    if (result.result_type === "low_engagement") {
+      return { ok: false, reason: "low_engagement",
+               message: "Nothing registered strongly enough to place you. No archetype page applies." };
+    }
+
+    const isSov = result.result_type === "sovereign";
+    const archetype = isSov ? "The Sovereign" : result.archetype;
+
+    // guard: never render a person into the wrong page
+    if (page && page.archetype && page.archetype !== archetype) {
+      return { ok: false, reason: "wrong-page", correctSlug: SLUG[archetype], archetype };
+    }
+
+    const authorshipPct = result.sovereign_pct;
+
+    // profile: all 8 axes, marker = transmuted_pct (shadow 0 -> transmuted 100)
+    const profile = (result.arcs || []).map((a) => ({
+      arc: a.arc,
+      name: AXES[a.arc] ? AXES[a.arc].name : a.arc,
+      pct: leanPos(a.lean),                    // marker position: 50 = true midpoint
+      intensity: intensity(a.activation),      // how charged this axis is
+      lean: Math.round(a.lean),
+      shadowPct: Math.round(a.shadow_pct),     // raw poles, for "show the working"
+      transmutedPct: Math.round(a.transmuted_pct),
+      activation: Math.round(a.activation),
+      shadow: AXES[a.arc] ? stripThe(AXES[a.arc].shadow) : "",
+      transmuted: AXES[a.arc] ? stripThe(AXES[a.arc].transmuted) : "",
+      isDominant: a.arc === result.dominant_arc,
+    }));
+
+    if (isSov) {
+      const sv = { ok: true, resultType: "sovereign", archetype, slug: SLUG[archetype],
+                   authorshipPct, profile, axisPct: null, liveEdge: null, pole: "transmuted" };
+      sv.speedRead = speedRead(sv);
+      return sv;
+    }
+
+    const arcKey = result.dominant_arc;
+    const meta = AXES[arcKey] || { name: arcKey, transmuted: "" };
+    const domArc = (result.arcs || []).find((a) => a.arc === arcKey) || {};
+    const axisPct = leanPos(domArc.lean);      // was transmuted_pct — see leanPos()
+
+    const view = {
+      ok: true,
+      resultType: "archetype",
+      archetype,
+      slug: SLUG[archetype],
+      arc: arcKey,
+      axisName: meta.name,
+      transmutedName: meta.transmuted,
+      shadowName: meta.shadow,
+      pole: result.dominant_pole,
+      axisPct,
+      authorshipPct,
+      lean: Math.round(domArc.lean),
+      axisShadowPct: Math.round(domArc.shadow_pct),
+      axisTransmutedPct: Math.round(domArc.transmuted_pct),
+      axisActivation: Math.round(domArc.activation),
+      profile,
+    };
+    view.liveEdge = liveEdge(view);
+    view.speedRead = speedRead(view);
+    // The descriptors DEFINE what the number means, so they ship with the number
+    // rather than living as static page copy. That is what let the old page say
+    // "67% toward the Auteur" about someone whose lean was 0.
+    // Scaffolding wording — voiced.
+    const t = stripThe(view.transmutedName), sh = stripThe(AXES[arcKey].shadow);
+    view.axisDescriptor = `which way your ${meta.name.toLowerCase()} tilts \u2014 toward the ${sh} or the ${t}. 50% is the midpoint`;
+    view.axisDescriptorLong = `${meta.name} measures which way you tilt on this axis \u2014 toward the ${sh}\u2019s move or the ${t}\u2019s. 50% is the midpoint, not a pass mark.`;
+    return view;
+  }
+
+  /* ---- DOM binding (browser only) --------------------------------------
+     Fills any element carrying a data-hn hook. Leaves the page's built-in
+     example values untouched when no result is present, so each page still
+     opens standalone as a design reference.                                */
+  function hydrate(result, page, doc) {
+    doc = doc || (typeof document !== "undefined" ? document : null);
+    if (!doc) return { ok: false, reason: "no-dom" };
+    const view = buildView(result, page);
+    if (!view.ok) return view;
+
+    const set = (key, fn) => doc.querySelectorAll(`[data-hn="${key}"]`).forEach(fn);
+
+    if (view.axisPct !== null) set("axis-pct", (el) => { el.textContent = view.axisPct + "%"; });
+    set("authorship-pct", (el) => { el.textContent = view.authorshipPct + "%"; });
+    set("dial", (el) => { el.style.width = view.authorshipPct + "%"; });
+    if (view.liveEdge) set("live-edge", (el) => { el.innerHTML = view.liveEdge.html; });
+    // NB: descriptors and the speed sentence are intentionally NOT hydrated.
+    // The pages' bespoke copy describes each AXIS (stable) and reads within the
+    // page's own pole band, so it stays. Only numbers + the branching live edge
+    // are dynamic.
+
+    view.profile.forEach((p) => {
+      doc.querySelectorAll(`[data-hn-axis="${p.arc}"]`).forEach((el) => {
+        el.style.left = p.pct + "%";
+        el.style.opacity = p.intensity.toFixed(2);   // faint = quiet axis, bold = charged
+      });
+    });
+    return view;
+  }
+
+  /* ---- transport: quiz -> page ----------------------------------------- */
+  const KEY = "hntuai:result";
+  function store(result) {
+    try { sessionStorage.setItem(KEY, JSON.stringify(result)); return true; } catch (e) { return false; }
+  }
+  function load() {
+    try { const s = sessionStorage.getItem(KEY); return s ? JSON.parse(s) : null; } catch (e) { return null; }
+  }
+
+  return { AXES, SLUG, buildView, hydrate, liveEdge, speedRead, leanPos, intensity, store, load, KEY, ALIGN_BAND };
+});
+
+</script>
+<script>
+(function () {
+  var result = HNTUAI.load();
+  if (!result) return;                         // standalone: keep example values
+  var view = HNTUAI.hydrate(result, { archetype: "The Sovereign" });
+  if (!view.ok) {
+    if (view.reason === "wrong-page" && view.correctSlug)
+      location.replace("./" + view.correctSlug + ".html");
+    return;
+  }
+  document.documentElement.setAttribute("data-hn-ready", "1");
+})();
+</script>
+</body>
+</html>

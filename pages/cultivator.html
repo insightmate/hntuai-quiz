@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cultivator — Your #HowNotToUseAI Result</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f6f2ea;--card:#fffdf8;--ink:#23201b;--ink-soft:#463f36;--muted:#8c8272;
+    --hair:#e5ddcd;--clay:#a8443a;--clay-soft:#c98a83;--sage:#4f7a6f;--sage-soft:#9cbcb1;--gold:#b07d2b;
+    --accent:#4f7a6f;--accent-soft:#9cbcb1;--accent-tint:#f1f6f3;
+    --mono:"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Inter","Helvetica Neue",Arial,sans-serif;font-size:17.5px;line-height:1.68;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:672px;margin:0 auto;padding:0 22px;}
+  .topbar{border-bottom:1px solid var(--hair);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+  .topbar .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:16px;padding-bottom:16px;gap:12px;}
+  .topbar .r{color:var(--accent);}
+  .hero{padding:60px 0 30px;}
+  .eyebrow{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:28px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .eyebrow .pole{color:var(--accent);}
+  .eyebrow .dot{width:4px;height:4px;border-radius:50%;background:var(--hair);}
+  h1.name{font-family:"Fraunces",Georgia,serif;font-size:clamp(54px,12vw,90px);font-weight:600;line-height:.97;letter-spacing:-.02em;margin:0 0 24px;color:var(--ink);}
+  h1.name .the{display:block;font-size:.4em;font-weight:500;letter-spacing:.02em;color:var(--muted);margin-bottom:.14em;font-style:italic;}
+  .unsoftened{font-size:20px;line-height:1.56;color:var(--ink-soft);max-width:33em;margin:0;}
+  .unsoftened b{color:var(--ink);font-weight:600;}
+  .centerpiece{padding:56px 0 48px;text-align:center;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);margin:8px 0;}
+  .centerpiece .big{font-family:"Fraunces",Georgia,serif;font-size:clamp(27px,5.6vw,40px);font-weight:500;font-style:italic;line-height:1.28;letter-spacing:-.015em;color:var(--ink);margin:0 auto;max-width:16em;}
+  .centerpiece .big::before{content:"\201C";color:var(--accent-soft);}
+  .centerpiece .big::after{content:"\201D";color:var(--accent-soft);}
+  section{padding:28px 0;}
+  .sec-num{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+  .sec-num::before{content:"";width:26px;height:1.5px;background:var(--accent);display:inline-block;}
+  h2.sec{font-family:"Fraunces",Georgia,serif;font-size:clamp(27px,5.2vw,35px);font-weight:600;line-height:1.14;letter-spacing:-.015em;margin:0 0 22px;color:var(--ink);}
+  p{margin:0 0 20px;}
+  p:last-child{margin-bottom:0;}
+  .lead{font-size:19px;color:var(--ink-soft);}
+  em{font-style:italic;} strong{font-weight:600;}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-soft);}
+  a:hover{border-bottom-color:var(--accent);}
+  .glance{background:var(--card);border:1px solid var(--hair);border-radius:16px;padding:6px 24px;margin:24px 0 4px;}
+  .glance .gr{display:grid;grid-template-columns:128px 1fr;gap:16px;padding:15px 0;border-bottom:1px solid var(--hair);align-items:baseline;}
+  .glance .gr:last-child{border-bottom:0;}
+  .glance .gk{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+  .glance .gv{font-size:16.5px;color:var(--ink);line-height:1.4;}
+  .glance .gv .num{font-family:var(--mono);color:var(--accent);font-weight:700;font-style:normal;font-size:15px;letter-spacing:-.02em;}
+  .glance .gv .sub{color:var(--muted);font-size:14px;}
+  .glance .gv.truth{font-family:"Fraunces",serif;font-style:italic;font-size:19px;color:var(--ink);}
+  .mirror-intro{color:var(--ink-soft);margin-bottom:24px;}
+  .tells{list-style:none;padding:0;margin:0 0 20px;display:flex;flex-direction:column;gap:10px;}
+  .tell{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--hair);border-radius:12px;padding:16px 18px;cursor:pointer;transition:border-color .15s,background .15s;user-select:none;}
+  .tell:hover{border-color:var(--accent-soft);}
+  .tell .box{flex:0 0 auto;width:20px;height:20px;border-radius:6px;border:1.8px solid var(--muted);margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+  .tell .box svg{width:12px;height:12px;opacity:0;transform:scale(.5);transition:all .15s;stroke:#fff;}
+  .tell.on{border-color:var(--accent);background:var(--accent-tint);}
+  .tell.on .box{background:var(--accent);border-color:var(--accent);}
+  .tell.on .box svg{opacity:1;transform:scale(1);}
+  .tell .txt{font-size:16.5px;line-height:1.5;color:var(--ink-soft);}
+  .tell.on .txt{color:var(--ink);}
+  .tell .txt b{color:var(--ink);font-weight:600;}
+  .mirror-read{font-size:15px;color:var(--muted);font-style:italic;min-height:1.5em;transition:color .2s;padding-left:2px;}
+  .mirror-read.warm{color:var(--accent);font-style:normal;font-weight:500;}
+  .segs{margin-top:20px;border:1px solid var(--hair);border-radius:14px;overflow:hidden;background:var(--card);}
+  .seg{padding:15px 20px;border-bottom:1px solid var(--hair);font-size:16px;color:var(--ink-soft);line-height:1.5;}
+  .seg:last-child{border-bottom:0;}
+  .seg .n{font-weight:600;color:var(--accent);}
+  .catalyst{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-direction:column;gap:0;border:1px solid var(--hair);border-radius:14px;overflow:hidden;background:var(--card);}
+  .catalyst li{padding:16px 20px;border-bottom:1px solid var(--hair);font-size:16px;color:var(--ink-soft);display:flex;gap:14px;align-items:baseline;}
+  .catalyst li:last-child{border-bottom:0;}
+  .catalyst li .n{font-family:"Fraunces",serif;font-size:14px;color:var(--accent);font-weight:600;flex:0 0 auto;}
+  .catalyst li b{color:var(--ink);font-weight:600;}
+  .vignette{background:#faf5ee;border:1px solid var(--hair);border-radius:14px;padding:26px 28px;margin:4px 0 24px;}
+  .vignette .vt{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--accent);margin-bottom:12px;}
+  .vignette p{color:var(--ink-soft);font-size:16.5px;}
+  .vignette p:last-child{margin-bottom:0;}
+  .aside{margin-top:22px;padding:20px 22px;border:1px solid var(--hair);border-radius:14px;background:var(--card);font-size:16.5px;color:var(--ink-soft);}
+  .aside .al{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:10px;}
+  .aside p:last-child{margin-bottom:0;}
+  .gap-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:6px 0 20px;}
+  .gap-col{border:1px solid var(--hair);border-radius:14px;padding:20px;background:var(--card);}
+  .gap-col.recv{border-color:var(--accent-soft);background:var(--accent-tint);}
+  .gap-col .gh{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:14px;color:var(--muted);}
+  .gap-col.recv .gh{color:var(--accent);}
+  .gap-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;}
+  .gap-col li{font-family:"Fraunces",serif;font-size:17px;color:var(--ink);line-height:1.3;}
+  .gap-col.recv li{color:var(--accent);}
+  .turn{text-align:center;padding:50px 0;}
+  .turn .mk{font-size:11.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:14px;}
+  .turn .mk::before,.turn .mk::after{content:"";width:34px;height:1px;background:var(--hair);}
+  .turn p{font-family:"Fraunces",serif;font-style:italic;font-size:clamp(19px,3.8vw,23px);color:var(--ink-soft);max-width:24em;margin:0 auto;line-height:1.4;}
+  .breath{padding:74px 0 70px;text-align:center;}
+  .breath p{font-family:"Fraunces",serif;font-style:italic;font-size:16.5px;color:var(--muted);margin:0;letter-spacing:.01em;}
+  .poles{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0 0;}
+  .pole-card{position:relative;border:1px solid var(--hair);border-radius:14px;padding:18px 20px;background:var(--card);}
+  .pole-card.me{border-color:var(--accent);background:var(--accent-tint);}
+  .pole-card .youtag{position:absolute;top:-10px;left:18px;background:var(--accent);color:#fff;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:3px 10px;border-radius:999px;}
+  .pc-dir{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:8px;}
+  .pc-name{font-family:"Fraunces",Georgia,serif;font-size:20px;font-weight:600;color:var(--ink);margin-bottom:9px;line-height:1.1;}
+  .pole-card.me .pc-name{color:var(--accent);}
+  .pc-desc{font-size:14.5px;color:var(--ink-soft);line-height:1.46;}
+  .dest{border-left:3px solid var(--sage);padding-left:22px;margin:4px 0;}
+  .dest h3{font-family:"Fraunces",Georgia,serif;font-size:22px;font-weight:600;color:var(--sage);margin:0 0 14px;letter-spacing:-.01em;}
+  .prompt-inward{margin-top:22px;background:var(--card);border:1px dashed var(--sage-soft);border-radius:12px;padding:16px 18px;font-size:15.5px;color:var(--ink-soft);}
+  .prompt-inward b{color:var(--sage);font-weight:600;}
+  .liveedge{background:var(--ink);color:#f3ede2;border-radius:16px;padding:38px 32px;margin:6px 0;}
+  .liveedge .le-lab{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage-soft);font-weight:700;margin-bottom:18px;}
+  .liveedge .le-q{font-family:"Fraunces",Georgia,serif;font-size:clamp(21px,4.3vw,27px);font-weight:500;line-height:1.4;margin:0;letter-spacing:-.01em;}
+  .liveedge .le-q .n{color:#f0c274;font-family:var(--mono);font-size:.82em;letter-spacing:-.02em;}
+  .liveedge .le-note{margin-top:20px;font-size:14.5px;line-height:1.62;color:#b8b0a2;border-top:1px solid rgba(255,255,255,.14);padding-top:16px;}
+  .move{background:var(--card);border:1px solid var(--hair);border-radius:14px;padding:26px 28px;margin:4px 0 24px;}
+  .move .mlab{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--accent);margin-bottom:12px;}
+  .move .mbig{font-family:"Fraunces",Georgia,serif;font-size:21px;line-height:1.42;color:var(--ink);font-weight:500;margin:0 0 14px;}
+  .move .perm{font-size:15px;color:var(--muted);font-style:italic;margin:0;}
+  .rx{background:#faf5ee;border:1px solid var(--hair);border-radius:14px;padding:8px 26px 22px;}
+  .rx-row{padding:18px 0;border-bottom:1px solid var(--hair);}
+  .rx-row:last-child{border-bottom:0;}
+  .rx-k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:7px;}
+  .rx-v{font-size:16px;color:var(--ink-soft);}
+  .rx-v b{color:var(--ink);font-weight:600;}
+  .rx-v .law{color:var(--accent);font-weight:600;}
+  .essays{list-style:none;padding:0;margin:8px 0 0;display:flex;flex-direction:column;gap:6px;}
+  .essays li{font-size:15.5px;color:var(--ink-soft);padding-left:18px;position:relative;font-style:italic;}
+  .essays li::before{content:"→";position:absolute;left:0;color:var(--accent-soft);font-style:normal;}
+  .metric{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:6px 0 0;}
+  .metric .m{border:1px solid var(--hair);border-radius:14px;padding:20px;background:var(--card);}
+  .metric .m .k{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:10px;}
+  .metric .m .v{font-family:"Fraunces",serif;font-size:19px;line-height:1.3;color:var(--ink);}
+  .metric .m.old .v{color:var(--muted);}
+  .metric .m.new{border-color:var(--accent-soft);background:var(--accent-tint);}
+  .metric .m.new .v{color:var(--accent);}
+  .weather{font-size:17px;color:var(--ink-soft);}
+  .weather .field-q{font-family:"Fraunces",Georgia,serif;font-style:italic;font-size:20px;color:var(--ink);display:block;margin:20px 0 10px;line-height:1.4;}
+  .axis-cap{font-size:14.5px;color:var(--muted);margin:0 0 16px;}
+  .axis-cap b.s{color:var(--clay);font-weight:600;}
+  .axis-cap b.t{color:var(--sage);font-weight:600;}
+  .axis-table{border:1px solid var(--hair);border-radius:14px;overflow:hidden;background:var(--card);}
+  .axt-head,.axt-row{display:grid;grid-template-columns:76px 96px 1fr 96px;align-items:center;gap:12px;padding:13px 18px;}
+  .axt-head{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;background:#faf5ee;border-bottom:1px solid var(--hair);}
+  .axt-head .sh{text-align:right;}
+  .axt-row{border-bottom:1px solid var(--hair);font-size:14.5px;}
+  .axt-row:last-child{border-bottom:0;}
+  .axt-axis{font-weight:700;color:var(--ink-soft);}
+  .axt-shadow{color:var(--clay);text-align:right;font-weight:500;}
+  .axt-trans{color:var(--sage);font-weight:500;}
+  .axt-track{position:relative;height:6px;background:linear-gradient(90deg,var(--clay-soft),#e5ddcd 50%,var(--sage-soft));border-radius:5px;}
+  .axt-track .mk{position:absolute;top:50%;width:13px;height:13px;border-radius:50%;background:var(--card);border:2.5px solid var(--muted);transform:translate(-50%,-50%);box-shadow:0 1px 3px rgba(0,0,0,.14);}
+  .axt-row.dom{background:var(--accent-tint);}
+  .axt-row.dom .axt-axis{color:var(--accent);font-weight:700;}
+  .axt-row.dom .axt-track .mk{border-color:var(--accent);width:16px;height:16px;border-width:3px;}
+  .axd{display:block;font-size:10.5px;letter-spacing:0;text-transform:none;color:var(--muted);font-weight:400;margin-top:3px;line-height:1.25;font-style:italic;}
+  .speed{margin-top:24px;background:var(--card);border:1px solid var(--hair);border-radius:14px;padding:24px 26px;}
+  .speed .sh{font-family:"Fraunces",Georgia,serif;font-size:20px;font-weight:600;margin:0 0 6px;color:var(--ink);}
+  .speed .ss{font-size:15px;color:var(--muted);margin:0 0 18px;}
+  .speed-track{position:relative;height:12px;background:var(--hair);border-radius:8px;overflow:hidden;}
+  .speed-fill{position:absolute;left:0;top:0;height:100%;width:70%;background:linear-gradient(90deg,var(--sage),var(--gold));border-radius:8px;}
+  .speed-scale{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:8px;}
+  .speed-val{font-family:var(--mono);font-size:14px;color:var(--accent);font-weight:700;letter-spacing:-.02em;}
+  .power{background:linear-gradient(180deg,var(--accent-tint),#fffdf8);border:1px solid var(--sage-soft);border-radius:16px;padding:30px 30px;margin:6px 0 0;}
+  .power .pl{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--sage);margin-bottom:14px;}
+  .power h3{font-family:"Fraunces",serif;font-size:25px;font-weight:600;line-height:1.18;margin:0 0 16px;color:var(--ink);letter-spacing:-.01em;}
+  .power p{color:var(--ink-soft);font-size:16.5px;}
+  .power p:last-child{margin-bottom:0;}
+  .power b{color:var(--ink);font-weight:600;}
+  .bridge{background:var(--card);border:1px solid var(--hair);border-radius:18px;padding:38px 32px;margin:20px 0 0;text-align:center;}
+  .bridge h2{font-family:"Fraunces",serif;font-size:28px;font-weight:600;margin:0 0 14px;letter-spacing:-.01em;line-height:1.2;}
+  .bridge p{color:var(--ink-soft);max-width:32em;margin:0 auto 26px;font-size:17px;}
+  .cta-tiers{display:flex;flex-direction:column;gap:12px;margin-top:6px;text-align:left;}
+  .cta-tier{border:1px solid var(--hair);border-radius:14px;padding:15px 18px;background:var(--paper);}
+  .cta-tier .ct-k{font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:5px;}
+  .cta-tier .ct-v{font-size:15px;color:var(--ink-soft);line-height:1.5;}
+  .cta-tier.primary{border-color:var(--accent);background:var(--accent-tint);}
+  .cta-tier.primary .ct-k{color:var(--accent);}
+  .btn{display:inline-block;background:var(--ink);color:var(--paper);font-weight:600;font-size:16px;letter-spacing:.01em;padding:16px 34px;border-radius:999px;text-decoration:none;border:0;transition:transform .12s,background .15s;}
+  .btn:hover{background:var(--accent);transform:translateY(-1px);}
+  .cta-tier .btn{margin-top:4px;}
+  footer{border-top:1px solid var(--hair);margin-top:56px;padding:32px 0 70px;}
+  footer .fine{font-size:13px;color:var(--muted);font-style:italic;line-height:1.7;max-width:40em;}
+  @media (max-width:560px){
+    body{font-size:16.5px;}
+    .hero{padding:40px 0 22px;}
+    .centerpiece{padding:42px 0 38px;}
+    .liveedge,.bridge,.power{padding:26px 22px;}
+    .move,.rx,.speed{padding-left:20px;padding-right:20px;}
+    .gap-grid,.metric,.poles{grid-template-columns:1fr;}
+    .glance .gr{grid-template-columns:1fr;gap:4px;padding:13px 0;}
+    .axt-head,.axt-row{grid-template-columns:60px 78px 1fr 78px;gap:8px;padding:12px 12px;font-size:12.5px;}
+    .axt-head{font-size:9.5px;letter-spacing:.06em;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap"><span>#HowNotToUseAI · The Diagnostic</span><span class="r">Your Result</span></div></div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow"><span>The Agency axis</span><span class="dot"></span><span class="pole">Transmuted pole</span></div>
+    <div class="pol-meta" style="font-family:var(--mono);font-size:11.5px;letter-spacing:.01em;color:var(--muted);margin:0 0 26px;">Reading time: 12 minutes</div>
+    <h1 class="name"><span class="the">You are</span>The Cultivator</h1>
+    <p class="unsoftened">You stopped gaslighting your body. You worked out that no amount of compliance was ever going to save you, that you cannot out-hustle a machine, and you walked toward a life the algorithm cannot touch. Not anti-AI. <b>Anti-disembodiment.</b> You use the tool fast, for the parts that do not matter, and you spend the rest of your life somewhere no one can log into.</p>
+  </header>
+
+  <div class="centerpiece"><p class="big">Build a life they can't log into.</p></div>
+
+  <!-- AUTHORSHIP DEFINITION (system spine) -->
+  <section style="padding-bottom:6px;">
+    <p class="lead">Before the number, the word. One idea runs underneath this whole result, and it is worth having before you see a score for it. <b>Authorship</b> is not how much you use the machine. It is who sets the terms. Whether you are the one shaping it, or it is quietly shaping you. A heavy user and a total refuser can both score high, as long as the terms are theirs. That is the thing the quiz was really measuring the whole time.</p>
+  </section>
+
+  <div class="glance">
+    <div class="gr"><span class="gk">Your result</span><span class="gv">The Cultivator · the transmuted pole of <b>Agency</b></span></div>
+    <div class="gr"><span class="gk">The truth</span><span class="gv truth">You believed your body.</span></div>
+    <div class="gr"><span class="gk">Agency</span><span class="gv"><span class="num" data-hn="axis-pct">84%</span> toward the Cultivator &nbsp;<span class="sub">how much your body's verdict, not the mandate, decides what you adopt</span></span></div>
+    <div class="gr"><span class="gk">Authorship</span><span class="gv"><span class="num" data-hn="authorship-pct">83%</span> &nbsp;<span class="sub">how much of the relationship with the machine you set the terms of</span></span></div>
+    <div class="gr"><span class="gk">Your one move</span><span class="gv">Name what one reclaimed hour is for <b>before</b> you save it.</span></div>
+  </div>
+
+  <section>
+    <p class="lead">There is a quieter version of that line, and it keeps you honest. The decision was the easy part. You already made it. What is not finished is the structure, because reclaimed time gets eaten unless it has somewhere named to go, and even you can let the medium quietly creep back into the hours that were the whole point. Read this without the victory lap. The exit is not a moment you passed through. It is a fence you keep mending.</p>
+  </section>
+
+  <!-- MIRROR -->
+  <section>
+    <div class="sec-num">The mirror</div>
+    <h2 class="sec">The decision you already made</h2>
+    <p class="mirror-intro">You already knew, before AI, which environments made you more human — the ones where you made food, fixed something, touched soil, went unreachable, finished one concrete thing with your hands. AI did not create the instinct. It made the contrast unbearable enough to act on. Mark the ones you recognise.</p>
+    <ul class="tells" id="tells">
+      <li class="tell"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2"><path d="M5 12l5 5L19 7"/></svg></span><span class="txt">Your gut drops on an opportunity and you turn it down, <b>even when it looks perfect on paper</b>.</span></li>
+      <li class="tell"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2"><path d="M5 12l5 5L19 7"/></svg></span><span class="txt">You put yourself where you cannot be reached, tracked, or optimised, on purpose and on a schedule.</span></li>
+      <li class="tell"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2"><path d="M5 12l5 5L19 7"/></svg></span><span class="txt">You would rather finish one real thing with your hands than keep something running on a screen forever.</span></li>
+      <li class="tell"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2"><path d="M5 12l5 5L19 7"/></svg></span><span class="txt">You keep a private journal off any server — a space no model can ingest.</span></li>
+      <li class="tell"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2"><path d="M5 12l5 5L19 7"/></svg></span><span class="txt">You know the exact difference between resting and numbing, and you protect it.</span></li>
+    </ul>
+    <p class="mirror-read" id="mirrorRead">Recognition without a victory lap is the signal. If this felt like applause, it missed the discipline underneath it.</p>
+  </section>
+
+  <!-- MICRO-SEGMENTS -->
+  <section>
+    <div class="sec-num">Same archetype, different costume</div>
+    <h2 class="sec">You might be showing up as one of these</h2>
+    <p>The Cultivator is one exit walked several ways. One of these is probably you more than the others, and it tells you where your practice is strongest — and where it still leaks.</p>
+    <div class="segs">
+      <div class="seg"><span class="n">The Un-Scrapeable Investor.</span> Your time goes into physical projects, private journals, gatherings the algorithm can't touch.</div>
+      <div class="seg"><span class="n">The Maker.</span> You'd rather finish one real thing with your hands — white oak, sourdough — than keep something running on a screen forever.</div>
+      <div class="seg"><span class="n">The Off-Grid Regular.</span> One room, one hour, a regular occasion where you can't be reached, tracked, or optimised.</div>
+      <div class="seg"><span class="n">The Gut-Truster.</span> Your gut drops on an opportunity and you turn it down, even when it looks perfect on paper.</div>
+      <div class="seg"><span class="n">The Offline-First.</span> For you, offline is the destination, not the recharge between screen sessions.</div>
+    </div>
+  </section>
+
+  <!-- CATALYST -->
+  <section>
+    <div class="sec-num">Where it actually gets hard</div>
+    <h2 class="sec">Where the exit leaks</h2>
+    <p>Your fight is not with the decision. You already won that one. It is with the quiet re-colonisation of the hours you reclaimed. Watch for these four.</p>
+    <ol class="catalyst">
+      <li><span class="n">01</span><span><b>The quick check.</b> You open the tool for one thing and surface an hour later, the reclaimed time gone.</span></li>
+      <li><span class="n">02</span><span><b>The reclaimed evening.</b> You defended the hour, then filled it with a screen and called it rest.</span></li>
+      <li><span class="n">03</span><span><b>The creep.</b> A task you automated that you actually missed doing, handed over anyway because it was faster.</span></li>
+      <li><span class="n">04</span><span><b>The un-named hour.</b> You saved the time and did not decide what it was for, so it went straight back into throughput.</span></li>
+    </ol>
+    <div class="vignette" style="margin-top:22px;">The tell is in the moment after you close the laptop. Either the hour has somewhere to go — a person, a bench, a pan, a page — or it does not, and it quietly refills with the same thing you left. Learn that moment. It is where the exit is either real or decorative.</div>
+  </section>
+
+  <!-- FRICTION -->
+  <section>
+    <div class="sec-num">The friction you carry, since every pole carries one</div>
+    <h2 class="sec">Your trap is not the enclosure. It is the fence.</h2>
+    <p>You solved the disappearing into the screen. Your trap sits on the far side of the same instinct. You believe the decision was the finish line, so you stop building — and reclaimed time behaves exactly like everyone else's saved time, silently reabsorbed into more throughput unless something structural holds it open. A concluded decision and a defended structure are two different things, and almost no one is taught the second.</p>
+    <div class="vignette">
+      <div class="vt">Eleven o'clock, the evening you defended</div>
+      <p>You protected the hour. You closed the laptop early, on purpose, the way you promised yourself you would. And then the hour arrived with nowhere named to go, so it filled with a screen, the same as it always used to, and you called it rest because you were tired. In the morning the tiredness had not lifted. The decision held. The structure did not.</p>
+    </div>
+    <p>There is a second trap, quieter than the first, and it is the one you are most likely to miss. You did not build a sanctuary. You built a bunker. The refusal hardens into withdrawal, the exit curdles into a private purity, a door only you ever walk through — and a private exit is fragile. If you do not build a real world on the outside and bring people into it, the boredom and the loneliness will walk you right back in. <b>Reclaimed time isn't real until it's spent in a body.</b> Read that twice. Reclaimed time isn't real until it's spent in a body.</p>
+    <div class="aside">
+      <div class="al">About the hours that already leaked</div>
+      <p>There is probably a quiet frustration about the evenings you defended and then lost to a screen anyway. Do not read it as failure. A concluded decision and a defended structure are two different things, and no one taught you the second one. The leak is not proof the exit was fake. It is the next piece of the build, showing you exactly where the fence has a gap.</p>
+    </div>
+  </section>
+
+  <!-- PERCEPTION -->
+  <section>
+    <div class="sec-num">The gap you cannot see</div>
+    <h2 class="sec">What you believe you have done, and what is quietly still true</h2>
+    <p>You are on the far side of the decision, which is the hardest place from which to see what is left. Here is the gap.</p>
+    <div class="gap-grid">
+      <div class="gap-col">
+        <div class="gh">What you believe you have done</div>
+        <ul><li>Made the decision</li><li>Left the enclosure</li><li>Reclaimed the time</li><li>Found the exit</li></ul>
+      </div>
+      <div class="gap-col recv">
+        <div class="gh">What is quietly still true</div>
+        <ul><li>The hour still leaks</li><li>The medium still creeps</li><li>A felt no isn't a rule yet</li><li>A door only you walk</li></ul>
+      </div>
+    </div>
+    <p>None of this undoes the exit. The decision is real and it was hard-won. But the work does not end at the decision, and the part that remains is structural rather than characterological — a felt no that has not yet become a bright line, an hour that has not yet been given somewhere to land.</p>
+  </section>
+
+  <!-- BREATH -->
+  <div class="breath"><p>Take a breath here.<br>This is the discipline you chose. Sit in it a moment.</p></div>
+
+  <!-- GIFT -->
+  <section>
+    <div class="sec-num">Before the edge, the gift</div>
+    <h2 class="sec">You have a biological compass</h2>
+    <p>Here is the part the whole result has been standing on, true whether you landed as the Captive or the Cultivator. You have a biological compass. Your nervous system registers the difference between a synthetic, extractive environment and a real, regenerative one, and it files the report as dread, or stiffness, or the ick, long before your mind can build a case either way. Most people have trained themselves not to feel it at all. You not only still feel it — you finally believed it, and let it decide.</p>
+    <div class="poles">
+      <div class="pole-card"><div class="pc-dir">Override the compass</div><div class="pc-name">The Captive</div><div class="pc-desc">My body says this is wrong, and I swallow it, and I explain why the cost is acceptable.</div></div>
+      <div class="pole-card me"><span class="youtag">You are here</span><div class="pc-dir">Obey the compass</div><div class="pc-name">The Cultivator</div><div class="pc-desc">My body says this is wrong, so I believe it, and I walk toward what it recognises as real.</div></div>
+    </div>
+    <p style="margin-top:20px;">Same compass, two responses. The gift is not the pole. The gift is the reading. You have it pointed the right way — and the work now is holding the reading steady when the convenience creeps back in.</p>
+  </section>
+
+  <!-- TURN -->
+  <div class="turn"><div class="mk">The turn</div><p>You did the hard part already. Let that land before you reach for the next thing. You are allowed to sit here. What follows is the edge you are actually standing on.</p></div>
+
+  <!-- NEXT EDGE -->
+  <section>
+    <div class="sec-num">Not where you're going. Where you are.</div>
+    <div class="dest">
+      <h3>The next level of the same move</h3>
+      <p>You know the Captive from the inside. It is the shadow of your own axis, the version of you that felt the very same ick and swallowed it, because refusal felt professionally fatal. You went the other way and believed the body. Hold onto this: the reflex to protect the exit can calcify into its own kind of enclosure — a refusal so private it becomes nostalgia, a door only you ever walk through.</p>
+      <p>So your next move is not more leaving. You already left. It is transmission. The exit that stays a solo act is fragile and, eventually, lonely; the one that gets handed to another person is how a private sanity becomes a shared one. Bring one person with you. Give the thing a name they can hold — an "un-scrapeable investment," a "day the algorithm can't touch" — so the move becomes something someone else can make too.</p>
+      <div class="prompt-inward">
+        <b>For later.</b> Name one person, roughly a year behind where you are now, who keeps saying they are tired. You do not need to convert them. Just show them the finished thing, and where the hour went.
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE EDGE -->
+  <section>
+    <div class="sec-num">Your live edge</div>
+    <div class="liveedge">
+      <div class="le-lab">The gap the 30 days are built for</div>
+      <p class="le-q" data-hn="live-edge">Your Agency sits at <span class="n">84%</span> between the Captive and the Cultivator. Your authorship reads at <span class="n">83%</span>. You are not on your way here. You are here.</p>
+      <p class="le-note">Agency measures how much your body's verdict, rather than the mandate or the fear, decides what you adopt. Authorship measures how much of the relationship with the machine you set the terms of. Both are high, and both are earned. The edge is not to raise the numbers. It is to build the fence that keeps the reclaimed hour real. These figures come from how you actually answered.</p>
+    </div>
+  </section>
+
+  <!-- ONE MOVE + READING -->
+  <section>
+    <div class="sec-num">One move, doable on a Tuesday</div>
+    <div class="move">
+      <div class="mlab">This week</div>
+      <p class="mbig">Claim the hour before the machine eats it. An unnamed hour is a vacuum, and a vacuum fills with someone else's throughput. So name it before you save it — not "rest," but a person, a place, a material — then give it a body and put a lock on the door: a calendar block, a hard stop, the phone in another room.</p>
+      <p class="perm">The decision was the easy part, and you already made it. The reclaimed hour gets eaten unless it has somewhere named to go, and "somewhere" has to be specific enough to walk to. That is the work now — not leaving, which is done, but building the fence that keeps the leaving real.</p>
+    </div>
+    <div class="rx">
+      <div class="rx-row">
+        <div class="rx-k">Read first</div>
+        <div class="rx-v"><span class="law">Law 7 — Reclaim Human Time.</span> Make the saved hour accountable to the life it was meant to serve; compress the mechanical work, then bank the time on purpose. Then <span class="law">Law 48 — Exit the Matrix</span>, which gives chosen non-use its language, and <span class="law">Law 50 — Grow What Makes It Obsolete</span>, which turns a private exit into something others can join.</div>
+      </div>
+      <div class="rx-row">
+        <div class="rx-k">The deeper pattern</div>
+        <div class="rx-v">You were protecting aliveness long before AI. The danger now is letting that wisdom curdle into withdrawal or nostalgia instead of stewardship. The offline turn is not a retreat from the world. It is a claim on the part of it that was always the point.</div>
+      </div>
+      <div class="rx-row">
+        <div class="rx-k">Try today</div>
+        <div class="rx-v"><b>Reclaim Human Time</b> (Day 22): name one mechanical task AI can genuinely touch, and one embodied destination for the hour it frees. "Rest" is too generic. Make it specific — walking, cooking, making, tending, reading, grieving, playing, being with one particular person.</div>
+      </div>
+      <div class="rx-row">
+        <div class="rx-k">If this named something in you, read these in order</div>
+        <ul class="essays">
+          <li>They Got Automation Backwards</li>
+          <li>Your Imagination Was Always Empire's Last Frontier</li>
+          <li>The Intelligence Was Always Yours</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- COUNTER-METRIC -->
+  <section>
+    <div class="sec-num">How you will know it is working</div>
+    <h2 class="sec">The feeling you are aiming for now</h2>
+    <p>You already obey the compass. Your metric sits further out than the shadow's does. The old satisfaction was the decision itself — the relief of having left. Aim past it.</p>
+    <div class="metric">
+      <div class="m old"><div class="k">The old signal</div><div class="v">The relief of having left. A decision, concluded and clean.</div></div>
+      <div class="m new"><div class="k">The new signal</div><div class="v">The reclaimed hour landing in a body. A finished thing, honest tiredness, a person across the table.</div></div>
+    </div>
+    <p style="margin-top:20px;">And here is the shape of the return, so you do not read it as going backwards. The first sign is not more refusal. It is that a felt no becomes a rule — a bright line, a hard stop, a device left in another room — so the body's verdict stops getting quietly overruled by the next convenient creep. Chase the landing, not the leaving.</p>
+  </section>
+
+  <!-- WHERE THE MEDIUM CREEPS BACK -->
+  <section>
+    <div class="sec-num">Even you are not finished</div>
+    <h2 class="sec">Where the medium still creeps back in</h2>
+    <p>Even you leave gaps in the fence. The exit runs solid in the rooms you have defended and thins out in the ones you have not looked at yet. Find where it still creeps back, because that is the next stretch of fence to mend.</p>
+    <ol class="catalyst">
+      <li><span class="n">01</span><span>The "quick check" that becomes an hour, in the one part of the day you never drew a line around.</span></li>
+      <li><span class="n">02</span><span>The reclaimed evening that dissolved into a screen, because you defended the time but not the destination.</span></li>
+      <li><span class="n">03</span><span>The task you automated that you actually missed doing — the making you handed away because it was faster.</span></li>
+      <li><span class="n">04</span><span>The private thing you started, quietly, to log into an app, letting the medium back into the interior you kept off-server.</span></li>
+    </ol>
+    <p style="margin-top:20px;">The exit is not a place you arrive. It is a line you keep re-drawing, a little further each time, around the parts of your life that were the whole point.</p>
+  </section>
+
+  <!-- CULTURAL ZEITGEIST -->
+  <section>
+    <div class="sec-num">You are not the only one standing here</div>
+    <h2 class="sec">The cultural zeitgeist</h2>
+    <p class="weather">The ground under you has moved, and it is worth reading properly, because it is moving your way. For years the offline turn read as eccentric — dropping out, going soft, a luxury. Then the evidence arrived. The largest four-day-week study to date, thousands of workers across dozens of organisations, found reduced burnout and better health with productivity broadly held, and around nine in ten companies kept the schedule. The mechanism was unglamorous and validating: less fatigue, better sleep, higher capacity. Rest as an input to good work, not its opposite.</p>
+    <p class="weather">Institutions that spent a decade selling more now openly ask whether AI's gains might buy shorter work instead. The dumbphone revival, people trading smartphones for feature phones to get their focus and sleep back, is a documented counter-trend rather than a fringe pose. Your nervous system was simply early. The research base and the cultural wave have caught up to what it already knew.
+      <span class="field-q">You are not eccentric. You are early.</span>
+      The one thing that cannot be automated turned out to be a real life, lived in a real body — and the world is only now working that out.
+    </p>
+  </section>
+
+  <!-- PROFILE -->
+  <section>
+    <div class="sec-num">Where you stand across all eight axes</div>
+    <h2 class="sec">Your profile</h2>
+    <p class="axis-cap">Agency is where you lead, and it is not the only axis you have worked on. On every line, the left is the <b class="s">shadow pole — where you hide</b>, the right is the <b class="t">transmuted pole — where you lead</b>, and the marker is you.</p>
+    <div class="axis-table">
+      <div class="axt-head"><span>Axis</span><span class="sh">Shadow</span><span>Your position</span><span>Transmuted</span></div>
+      <div class="axt-row dom"><span class="axt-axis">Agency<span class="axd">the body as compass</span></span><span class="axt-shadow">Captive</span><span class="axt-track"><i class="mk" data-hn-axis="AGY" style="left:84%;opacity:0.56"></i></span><span class="axt-trans">Cultivator</span></div>
+      <div class="axt-row"><span class="axt-axis">Voice<span class="axd">the risk of being seen</span></span><span class="axt-shadow">Automaton</span><span class="axt-track"><i class="mk" data-hn-axis="VOI" style="left:54%;opacity:0.28"></i></span><span class="axt-trans">Auteur</span></div>
+      <div class="axt-row"><span class="axt-axis">Value<span class="axd">time and self-worth</span></span><span class="axt-shadow">Hustler</span><span class="axt-track"><i class="mk" data-hn-axis="VAL" style="left:52%;opacity:0.28"></i></span><span class="axt-trans">Humanist</span></div>
+      <div class="axt-row"><span class="axt-axis">Boundaries<span class="axd">taste as door or fence</span></span><span class="axt-shadow">Purist</span><span class="axt-track"><i class="mk" data-hn-axis="BND" style="left:50%;opacity:0.28"></i></span><span class="axt-trans">Trickster</span></div>
+      <div class="axt-row"><span class="axt-axis">Partnership<span class="axd">who authors belonging</span></span><span class="axt-shadow">Companion</span><span class="axt-track"><i class="mk" data-hn-axis="PAR" style="left:51%;opacity:0.28"></i></span><span class="axt-trans">Kin Builder</span></div>
+      <div class="axt-row"><span class="axt-axis">Flow<span class="axd">control or emergence</span></span><span class="axt-shadow">Controller</span><span class="axt-track"><i class="mk" data-hn-axis="FLW" style="left:53%;opacity:0.28"></i></span><span class="axt-trans">Creatrix</span></div>
+      <div class="axt-row"><span class="axt-axis">Changemaking<span class="axd">critique or building</span></span><span class="axt-shadow">Reformer</span><span class="axt-track"><i class="mk" data-hn-axis="CHG" style="left:50%;opacity:0.28"></i></span><span class="axt-trans">Worldbuilder</span></div>
+      <div class="axt-row"><span class="axt-axis">Vision<span class="axd">certainty or the open future</span></span><span class="axt-shadow">Fatalist</span><span class="axt-track"><i class="mk" data-hn-axis="VIS" style="left:52%;opacity:0.28"></i></span><span class="axt-trans">Diviner</span></div>
+    </div>
+    <p class="axis-cap" style="margin:16px 0 0;">Read the whole line, not just the loudest note. You sit right of centre across the board and furthest into the transmuted end on Agency. The body led, and the rest followed it out. The risk of a strong profile is mistaking the map for the territory: the exit is a discipline you keep choosing, not a place you arrived once and get to keep for free.</p>
+    <div class="speed">
+      <p class="sh">Your authorship reads at <span data-hn="authorship-pct">83%</span></p>
+      <p class="ss">Read this as speed, not a grade. It is how fast you are already moving on your own ground. At <span data-hn="authorship-pct">83%</span> you are well up the terrain and moving under your own power. The work now is direction and structure, not distance.</p>
+      <div class="speed-track"><div class="speed-fill" data-hn="dial" style="width:83%"></div></div>
+      <div class="speed-scale"><span>authored by the mandate</span><span class="speed-val" data-hn="authorship-pct">83%</span><span>authored by you</span></div>
+    </div>
+  </section>
+
+  <!-- SUPERPOWER (pre-pitch) -->
+  <section>
+    <div class="power">
+      <div class="pl">What the refusal is becoming</div>
+      <h3>The instinct that read as eccentric is turning into the thing everyone else is chasing.</h3>
+      <p>Your offline turn cost you something for years. You wore the label of the one who dropped out, went soft, would not just keep up. You were early, and early is lonely, and you paid for it in rooms that measured worth by output. That was the price, and you paid it.</p>
+      <p>The ground is shifting under your feet. As the world floods with the synthetic and the infinite, the one scarce thing left is undeniable, analog reality — the finished table, the shared meal, the hour lived in a real body — and you already own it. The largest studies now agree with what your nervous system knew years ago. <b>The instinct that read as eccentric is becoming the moat.</b> That is not a trophy, and it is not permission to relax. A moat you stop maintaining silts up, and an exit that stays a solo act eventually becomes a lonely one. The culture is full of Captives still swallowing the ick, and it needs your nervous system out loud. Bring one of them with you while the wave is at your back.</p>
+    </div>
+  </section>
+
+  <!-- BRIDGE -->
+  <div class="bridge">
+    <h2>The 30 days are not here to fix you.</h2>
+    <p>You already believed the body. The challenge is the next move: turning a decision into a structure that holds, and a private exit into something you can hand to one other person. Week 4 is The Hearth, built for exactly this.</p>
+    <div class="cta-tiers">
+      <div class="cta-tier primary">
+        <div class="ct-k">If you are ready</div>
+        <div class="ct-v"><a href="https://abiawomosu.substack.com/p/the-hownottouseai-30-day-challenge" target="_blank" rel="noopener" class="btn">Join the Underground · Start the 30-Day Challenge</a></div>
+      </div>
+      <div class="cta-tier">
+        <div class="ct-k">If thirty days is too much tonight</div>
+        <div class="ct-v">Do the smallest version instead. Take one hour you would have spent optimising something, and spend it finishing one real thing with your hands. Put the phone in another room. Notice you did not miss it.</div>
+      </div>
+      <div class="cta-tier">
+        <div class="ct-k">If you want nothing else</div>
+        <div class="ct-v">Keep this page. It is yours to hold, and it will still be here when you are ready.</div>
+      </div>
+    </div>
+    <p style="font-weight:500;color:var(--ink);max-width:34em;margin:24px auto 0;">The wave is behind you now, not against you. You were early, and early is a responsibility. The work is no longer leaving — you already left. It is turning around and bringing one of the still-drowning with you.</p>
+  </div>
+
+</div>
+
+<footer><div class="wrap"><p class="fine">This is a lens, not a box. It reflects how you answered today, not who you are for good. #HowNotToUseAI · The Diagnostic.</p></div></footer>
+
+<script>
+  var tells = document.querySelectorAll('#tells .tell');
+  var read = document.getElementById('mirrorRead');
+  var base = "Recognition without a victory lap is the signal. If this felt like applause, it missed the discipline underneath it.";
+  function refresh(){
+    var n = document.querySelectorAll('#tells .tell.on').length;
+    if(n===0){ read.textContent = base; read.classList.remove('warm'); return; }
+    read.classList.add('warm');
+    if(n===1) read.textContent = "One landed. That is the compass, obeyed. You make that choice more often than you notice.";
+    else if(n<=3) read.textContent = n + " of these are you. That is the decision, made real and repeatable, one felt no at a time.";
+    else read.textContent = n + " of five. You are deep in the Cultivator move. The edge now is structure and transmission, not leaving.";
+  }
+  tells.forEach(function(t){ t.addEventListener('click', function(){ t.classList.toggle('on'); refresh(); }); });
+</script>
+
+<!-- HNTUAI hydration: fills numbers from the real result in sessionStorage. -->
+<script>
+/* ============================================================================
+   HNTUAI — RESULT CONTRACT  v1
+   The single source of truth between the diagnostic engine and the 17 pages.
+
+   Engine emits (per HNTUAI_Quiz_Build_Brief v1.2 §6):
+     { result_type, archetype, dominant_arc, dominant_pole,
+       sovereign_pct, sovereign_level, arcs:[{arc, shadow_pct,
+       transmuted_pct, activation, lean}] }
+
+   Pages consume: two headline numbers, one branching live-edge sentence,
+   an authorship dial, and 8 profile markers.
+
+   SEMANTICS (resolved against the built reference pages):
+     "Voice %"      = dominant arc's  transmuted_pct   (0-100)
+                      page's own words: "how much of your own unmediated
+                      perspective reaches the finished work"
+     "Authorship %" = sovereign_pct                     (0-100)
+     profile marker = each arc's      transmuted_pct    (0-100)
+                      shadow pole at 0, transmuted pole at 100
+
+   Framework-free. Same file runs in the browser and in node.
+   ========================================================================== */
+
+(function (root, factory) {
+  if (typeof module === "object" && module.exports) module.exports = factory();
+  else root.HNTUAI = factory();
+})(typeof self !== "undefined" ? self : this, function () {
+
+  /* ---- the 8 axes, shadow pole -> transmuted pole ---------------------- */
+  const AXES = {
+    BND: { name: "Boundaries",   shadow: "The Purist",           transmuted: "The Trickster" },
+    AGY: { name: "Agency",       shadow: "The Captive",          transmuted: "The Cultivator" },
+    VOI: { name: "Voice",        shadow: "The Automaton",        transmuted: "The Auteur" },
+    CHG: { name: "Changemaking", shadow: "The Reformer",         transmuted: "The Worldbuilder" },
+    VAL: { name: "Value",        shadow: "The Hustler",          transmuted: "The Humanist" },
+    FLW: { name: "Flow",         shadow: "The Controller",       transmuted: "The Creatrix" },
+    VIS: { name: "Vision",       shadow: "The Fatalist",         transmuted: "The Diviner" },
+    PAR: { name: "Partnership",  shadow: "The Companion Seeker", transmuted: "The Kin Builder" },
+  };
+
+  /* ---- archetype -> page slug (filenames use the bare name) ------------- */
+  const SLUG = {
+    "The Purist": "purist",                   "The Trickster": "trickster",
+    "The Captive": "captive",                 "The Cultivator": "cultivator",
+    "The Automaton": "automaton",             "The Auteur": "auteur",
+    "The Reformer": "reformer",               "The Worldbuilder": "worldbuilder",
+    "The Hustler": "hustler",                 "The Humanist": "humanist",
+    "The Controller": "controller",           "The Creatrix": "creatrix",
+    "The Fatalist": "fatalist",               "The Diviner": "diviner",
+    "The Companion Seeker": "companion-seeker","The Kin Builder": "kin-builder",
+    "The Sovereign": "sovereign",
+  };
+
+  /* ---- live-edge branching --------------------------------------------
+     The built copy asserts a RELATIONSHIP between two numbers
+     ("you are already leaning further than you are standing"), which is only
+     true when axisPct > authorshipPct. With live numbers that flips, so the
+     sentence must branch. ALIGN_BAND is the "same place" tolerance.
+
+     NB: the two non-default variants are scaffolding — they carry the logic,
+     not the register. Run them through the Voice Gate before shipping.      */
+  const ALIGN_BAND = 6;
+  const CONTRADICT_BAND = 12;
+
+  function liveEdge(view) {
+    const { axisPct, authorshipPct, pole, axisName, transmutedName, shadowName, lean } = view;
+    const gap = axisPct - authorshipPct;
+    // "X% toward the Auteur" only parsed while the number was a quantity. On a
+    // scale whose midpoint is 50, "50% toward the Auteur" is nonsense — so the
+    // head names the line the number sits on. voiced.
+    const head = `Your ${axisName} sits at <span class="n">${axisPct}%</span> between the ` +
+                 `${stripThe(shadowName)} and the ${stripThe(transmutedName)}. ` +
+                 `Your authorship reads at <span class="n">${authorshipPct}%</span>.`;
+
+    if (pole === "transmuted") {
+      // The pole is assigned by authorship alone. When the axis itself leans
+      // hard the OTHER way, "you are here" is false — the person endorsed the
+      // shadow items and skipped the transmuted ones. Never claim arrival.
+      if (lean <= -CONTRADICT_BAND) {
+        return {
+          variant: "arrived-contradicted",   // voiced
+          divergent: true,
+          html: `${head} Your authorship is real, and it is yours. This is the one axis it has not reached yet. Everywhere else, you set the terms — here, you are still letting them be set for you.`,
+        };
+      }
+      return { variant: "arrived", divergent: false,
+               html: `${head} You are not on your way here. You are here.` };
+    }
+    if (gap >= ALIGN_BAND) {
+      return { variant: "leaning-ahead", divergent: false,   // the canonical case the copy was written for
+               html: `${head} You are already leaning further than you are standing.` };
+    }
+    if (gap <= -ALIGN_BAND) {
+      return {
+        variant: "standing-ahead",  // voiced
+        divergent: false,
+        html: `${head} You have already claimed this ground. You are just not standing on it yet.`,
+      };
+    }
+    return {
+      variant: "aligned",           // voiced
+      divergent: false,
+      html: `${head} The two are standing level. Neither one is pulling the other forward yet.`,
+    };
+  }
+
+  function stripThe(s) { return s.replace(/^The\s+/, ""); }
+
+  /* ---- position on the axis --------------------------------------------
+     WHY LEAN, NOT transmuted_pct.
+     transmuted_pct answers "how much did you endorse the transmuted items" —
+     a QUANTITY. Plotting it on a shadow->transmuted line silently assumes that
+     not endorsing the transmuted pole means you sit AT the shadow pole. False:
+     you may not have endorsed the shadow pole either. A respondent who mildly
+     agreed with one Captive item and no Cultivator items has transmuted_pct 0
+     and lands pinned at the absolute Captive pole — from a shrug.
+
+     lean = transmuted% − shadow%, so it is a genuine balance between the two.
+     Mapped here to 0..100 with 50 = the true midpoint.
+     The build brief agrees: "their Voice Lean of +49 toward Auteur is surfaced
+     as the live edge."  It is lean that is directional, not transmuted_pct.
+
+     It also makes the two headline numbers commensurable: authorship 50% means
+     "neutral" and axis 50% now also means "neutral", so the live edge compares
+     like with like. Against transmuted_pct it was comparing two different scales. */
+  function leanPos(lean) { return Math.round((lean + 100) / 2); }
+
+  /* lean alone cannot tell "torn" (shadow 67 / transmuted 67) from "indifferent"
+     (0 / 0) — both sit at the midpoint. Activation carries that, so the marker
+     is drawn at leanPos and weighted by how charged the axis is. */
+  function intensity(activation) {
+    return Math.max(0.28, Math.min(1, activation / 120));
+  }
+
+  /* ---- the authorship dial's reading ----------------------------------
+     The built copy reads the number, not just prints it ("An Automaton at 41%
+     is guarding something real and moving with care"). That sentence is only
+     true in a band. Each SHADOW page only ever sees authorship 0-69 (above 70
+     the engine sends you to the transmuted pole), and each TRANSMUTED page only
+     ever sees 70-100 — so each page needs three bands, not the whole range.
+
+     Scaffolding copy: carries the banding, not the register. voiced. */
+  function speedRead(view) {
+    const { authorshipPct: p, pole, archetype } = view;
+    const who = "A" + (/^[AEIOU]/.test(stripThe(archetype)) ? "n" : "") + " " + stripThe(archetype);
+    if (pole === "shadow") {
+      if (p < 30) return { band: "low",
+        text: `${who} at ${p}% is deep in the pattern — most of the terms are still being set for you. That is worth knowing plainly, not worth panicking about.` };
+      if (p < 55) return { band: "mid",
+        text: `${who} at ${p}% is guarding something real and moving with care. Exactly the place to begin from.` };
+      return { band: "high",
+        text: `${who} at ${p}% is closer to the turn than they think. Most of this ground is already yours; the habit has not caught up to the authorship.` };
+    }
+    if (p < 80) return { band: "low",
+      text: `${who} at ${p}% has crossed, and recently. The terms are yours — holding them under pressure is the work now.` };
+    if (p < 92) return { band: "mid",
+      text: `${who} at ${p}% is standing on ground they set themselves. The edge is no longer whether you can hold it.` };
+    return { band: "high",
+      text: `${who} at ${p}% authors almost the whole relationship. The risk at this altitude is forgetting it was ever difficult.` };
+  }
+
+  /* ---- main -------------------------------------------------------------
+     result : engine output object
+     page   : { archetype } — the page this is being rendered into
+     returns a view model, or { ok:false, reason } when the page must not render */
+  function buildView(result, page) {
+    if (!result || !result.result_type) return { ok: false, reason: "no-result" };
+
+    if (result.result_type === "low_engagement") {
+      return { ok: false, reason: "low_engagement",
+               message: "Nothing registered strongly enough to place you. No archetype page applies." };
+    }
+
+    const isSov = result.result_type === "sovereign";
+    const archetype = isSov ? "The Sovereign" : result.archetype;
+
+    // guard: never render a person into the wrong page
+    if (page && page.archetype && page.archetype !== archetype) {
+      return { ok: false, reason: "wrong-page", correctSlug: SLUG[archetype], archetype };
+    }
+
+    const authorshipPct = result.sovereign_pct;
+
+    // profile: all 8 axes, marker = transmuted_pct (shadow 0 -> transmuted 100)
+    const profile = (result.arcs || []).map((a) => ({
+      arc: a.arc,
+      name: AXES[a.arc] ? AXES[a.arc].name : a.arc,
+      pct: leanPos(a.lean),                    // marker position: 50 = true midpoint
+      intensity: intensity(a.activation),      // how charged this axis is
+      lean: Math.round(a.lean),
+      shadowPct: Math.round(a.shadow_pct),     // raw poles, for "show the working"
+      transmutedPct: Math.round(a.transmuted_pct),
+      activation: Math.round(a.activation),
+      shadow: AXES[a.arc] ? stripThe(AXES[a.arc].shadow) : "",
+      transmuted: AXES[a.arc] ? stripThe(AXES[a.arc].transmuted) : "",
+      isDominant: a.arc === result.dominant_arc,
+    }));
+
+    if (isSov) {
+      const sv = { ok: true, resultType: "sovereign", archetype, slug: SLUG[archetype],
+                   authorshipPct, profile, axisPct: null, liveEdge: null, pole: "transmuted" };
+      sv.speedRead = speedRead(sv);
+      return sv;
+    }
+
+    const arcKey = result.dominant_arc;
+    const meta = AXES[arcKey] || { name: arcKey, transmuted: "" };
+    const domArc = (result.arcs || []).find((a) => a.arc === arcKey) || {};
+    const axisPct = leanPos(domArc.lean);      // was transmuted_pct — see leanPos()
+
+    const view = {
+      ok: true,
+      resultType: "archetype",
+      archetype,
+      slug: SLUG[archetype],
+      arc: arcKey,
+      axisName: meta.name,
+      transmutedName: meta.transmuted,
+      shadowName: meta.shadow,
+      pole: result.dominant_pole,
+      axisPct,
+      authorshipPct,
+      lean: Math.round(domArc.lean),
+      axisShadowPct: Math.round(domArc.shadow_pct),
+      axisTransmutedPct: Math.round(domArc.transmuted_pct),
+      axisActivation: Math.round(domArc.activation),
+      profile,
+    };
+    view.liveEdge = liveEdge(view);
+    view.speedRead = speedRead(view);
+    // The descriptors DEFINE what the number means, so they ship with the number
+    // rather than living as static page copy. That is what let the old page say
+    // "67% toward the Auteur" about someone whose lean was 0.
+    // Scaffolding wording — voiced.
+    const t = stripThe(view.transmutedName), sh = stripThe(AXES[arcKey].shadow);
+    view.axisDescriptor = `which way your ${meta.name.toLowerCase()} tilts \u2014 toward the ${sh} or the ${t}. 50% is the midpoint`;
+    view.axisDescriptorLong = `${meta.name} measures which way you tilt on this axis \u2014 toward the ${sh}\u2019s move or the ${t}\u2019s. 50% is the midpoint, not a pass mark.`;
+    return view;
+  }
+
+  /* ---- DOM binding (browser only) --------------------------------------
+     Fills any element carrying a data-hn hook. Leaves the page's built-in
+     example values untouched when no result is present, so each page still
+     opens standalone as a design reference.                                */
+  function hydrate(result, page, doc) {
+    doc = doc || (typeof document !== "undefined" ? document : null);
+    if (!doc) return { ok: false, reason: "no-dom" };
+    const view = buildView(result, page);
+    if (!view.ok) return view;
+
+    const set = (key, fn) => doc.querySelectorAll(`[data-hn="${key}"]`).forEach(fn);
+
+    if (view.axisPct !== null) set("axis-pct", (el) => { el.textContent = view.axisPct + "%"; });
+    set("authorship-pct", (el) => { el.textContent = view.authorshipPct + "%"; });
+    set("dial", (el) => { el.style.width = view.authorshipPct + "%"; });
+    if (view.liveEdge) set("live-edge", (el) => { el.innerHTML = view.liveEdge.html; });
+    // NB: descriptors and the speed sentence are intentionally NOT hydrated.
+    // The pages' bespoke copy describes each AXIS (stable) and reads within the
+    // page's own pole band, so it stays. Only numbers + the branching live edge
+    // are dynamic.
+
+    view.profile.forEach((p) => {
+      doc.querySelectorAll(`[data-hn-axis="${p.arc}"]`).forEach((el) => {
+        el.style.left = p.pct + "%";
+        el.style.opacity = p.intensity.toFixed(2);   // faint = quiet axis, bold = charged
+      });
+    });
+    return view;
+  }
+
+  /* ---- transport: quiz -> page ----------------------------------------- */
+  const KEY = "hntuai:result";
+  function store(result) {
+    try { sessionStorage.setItem(KEY, JSON.stringify(result)); return true; } catch (e) { return false; }
+  }
+  function load() {
+    try { const s = sessionStorage.getItem(KEY); return s ? JSON.parse(s) : null; } catch (e) { return null; }
+  }
+
+  return { AXES, SLUG, buildView, hydrate, liveEdge, speedRead, leanPos, intensity, store, load, KEY, ALIGN_BAND };
+});
+
+</script>
+<script>
+(function () {
+  var result = HNTUAI.load();
+  if (!result) return;                         // standalone: keep example values
+  var view = HNTUAI.hydrate(result, { archetype: "The Cultivator" });
+  if (!view.ok) {
+    if (view.reason === "wrong-page" && view.correctSlug)
+      location.replace("./" + view.correctSlug + ".html");
+    return;
+  }
+  document.documentElement.setAttribute("data-hn-ready", "1");
+})();
+</script>
+</body>
+</html>
