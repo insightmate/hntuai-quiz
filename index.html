@@ -17649,7 +17649,7 @@ const CONTENT = {
     "The Kin Builder": { essence: "You designed the terms deliberately — most people are in a relationship with AI they never agreed to. You keep the refusal from becoming the whole point.", oneMove: "Make one of your “AI never touches this” terms explicit to one person — as proof it’s possible, not as evangelism.", draft: true },
     "The Sovereign": { essence: "The decision has concluded, your criteria are internal, there’s a real structure and not just a vibe, and the explaining has stopped. The task now isn’t a crown — it’s transmission: passing on the judgement, not just the output.", draft: true },
 };
-/* ---- Default tunable constants (recalibrate against first cohort) ------- */
+/* ---- Default scoring constants (tuned against the first cohort) --------- */
 const DEFAULTS = { SOV_HIGH: 70, SOV_OFF: 85, T_tie: 10, T_flat: 30, A_floor: 20, L_floor: 8 };
 /* ---- THE TIEBREAK: forced choice, no neutral ---------------------------
    Shown only to respondents the main instrument cannot place: those who
@@ -18017,12 +18017,8 @@ const CSS = `
 .hn-bridge{font-size:14.5px;color:var(--ink-2);line-height:1.55}
 .hn-draft{font-family:'Spline Sans Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.08em;border:1px dashed var(--gold);border-radius:2px;padding:3px 8px;display:inline-block;margin-top:12px}
 
-.hn-diag summary{font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-top:30px}
-.hn-diag pre{font-family:'Spline Sans Mono',monospace;font-size:11.5px;background:#20232c;color:#d8dae0;padding:16px;border-radius:3px;overflow:auto;margin-top:12px}
-.hn-tuner{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:14px}
-.hn-tuner label{font-family:'Spline Sans Mono',monospace;font-size:11px;color:var(--muted);display:block}
-.hn-tuner input{width:100%}
-.hn-tuner .v{color:var(--ink);font-size:12px}
+.hn-redirect{text-align:center;padding-top:32px}
+.hn-redirect .hn-essence{max-width:none}
 .hn-actions{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap}
 @media(max-width:560px){.hn-h1{font-size:30px}.hn-arch{font-size:34px}.hn-q .qt{font-size:17px}.hn-row .name{width:80px}}
 
@@ -18108,7 +18104,7 @@ function Intro({ onStart }) {
         React.createElement("div", { className: "hn-commit" },
             React.createElement("div", { className: "stat" }, "129 questions \u00B7 11 rapid-fire pages \u00B7 8 minutes"),
             React.createElement("p", { className: "say" }, "Answer for how you actually behave, not the version you wish were true. If the result reads like a compliment, it missed you."),
-            React.createElement("button", { className: "hn-cta", onClick: onStart }, "Audit my agency \u2192"),
+            React.createElement("button", { className: "hn-cta", onClick: onStart }, "Take the diagnostic \u2192"),
             React.createElement("p", { className: "hn-foot" }, "Built on the book \u2014 How Not To Use AI"))));
 }
 const PER_PAGE = 12;
@@ -18269,26 +18265,37 @@ function CurrentGauge({ pct, threshold }) {
                 threshold,
                 "%."))));
 }
-function Diagnostics({ output, C, setC }) {
-    const keys = [
-        ["SOV_HIGH", 50, 100], ["SOV_OFF", 60, 100], ["T_tie", 0, 40],
-        ["T_flat", 0, 80], ["A_floor", 0, 60],
-    ];
-    return (React.createElement("details", { className: "hn-diag" },
-        React.createElement("summary", null, "Engine diagnostics \u00B7 recalibrate constants"),
-        React.createElement("div", { className: "hn-tuner" }, keys.map(([k, min, max]) => (React.createElement("label", { key: k },
-            k,
-            " ",
-            React.createElement("span", { className: "v" }, C[k]),
-            React.createElement("input", { type: "range", min: min, max: max, value: C[k], onChange: (e) => setC({ ...C, [k]: Number(e.target.value) }) }))))),
-        React.createElement("pre", null, JSON.stringify(output, null, 2))));
-}
-function Result({ output, C, setC, onRetake }) {
-    if (output.result_type === "low_engagement" || output.result_type === "undifferentiated") {
-        const undiff = output.result_type === "undifferentiated";
+/* The in-app diagnostics panel and the intermediate result screen were removed.
+   Engine internals (constants, raw scoring JSON) must never render in production.
+   On completion we log the run, then send the person straight to their wired
+   result page. The only screen that renders here is the honest no-placement one. */
+function ResultRedirect({ output, answers, onRetake }) {
+    const noPlace = output.result_type === "low_engagement" || output.result_type === "undifferentiated";
+    const undiff = output.result_type === "undifferentiated";
+    const key = output.result_type === "sovereign" ? "The Sovereign" : output.archetype;
+    let slug = null;
+    try {
+        slug = (window.HNTUAI && window.HNTUAI.SLUG && key) ? window.HNTUAI.SLUG[key] : null;
+    }
+    catch (e) {
+        slug = null;
+    }
+    const target = slug ? "./pages/" + slug + ".html" : null;
+    useEffect(() => {
+        hnLog(output, answers); // record the completed run first (fire-and-forget)
+        if (noPlace || !target)
+            return; // no wired page for the honest no-placement outcome
+        try {
+            window.HNTUAI && window.HNTUAI.store && window.HNTUAI.store(output);
+        }
+        catch (e) { }
+        const t = setTimeout(() => { window.location.href = target; }, 400); // brief beat so the beacon flushes
+        return () => clearTimeout(t);
+    }, []);
+    if (noPlace) {
         return (React.createElement("div", { className: "hn-wrap" },
             React.createElement("div", { className: "hn-rlabel" }, "No placement \u00B7 this is a real answer, not a failure"),
-            React.createElement("h2", { className: "hn-arch" }, undiff ? "Everywhere at once." : "Nowhere in particular."),
+            React.createElement("h2", { className: "hn-arch hn-serif" }, undiff ? "Everywhere at once." : "Nowhere in particular."),
             React.createElement("p", { className: "hn-essence" }, undiff
                 ? "You endorsed both poles of every axis — the hiding and the making, the control and the surrender. The instrument can't place you because you didn't stand anywhere, and we'd rather tell you that than invent a result."
                 : "No terrain came through with enough charge to place you, even when the scale was taken away. That can mean the statements didn't reach you, or that today you're genuinely even across the board. Both are real states."),
@@ -18299,74 +18306,15 @@ function Result({ output, C, setC, onRetake }) {
                     React.createElement("b", null, "you"),
                     " \u2014 it would have been about which axis happened to sort first. A diagnostic that names you anyway is flattering you, and this one won't.")),
             React.createElement("div", { className: "hn-actions" },
-                React.createElement("button", { className: "hn-btn", onClick: onRetake }, "Start again")),
-            React.createElement(Diagnostics, { output: output, C: C, setC: setC })));
+                React.createElement("button", { className: "hn-btn", onClick: onRetake }, "Start again"))));
     }
-    const isSovereign = output.result_type === "sovereign";
-    const name = isSovereign ? "The Sovereign" : output.archetype;
-    const c = CONTENT[name] || {};
-    const arc = output.dominant_arc;
-    const poleWord = output.dominant_pole;
-    const domArcObj = output.arcs.find((a) => a.arc === arc);
-    const leanWord = domArcObj ? (domArcObj.lean > 0 ? "transmuted" : "shadow") : null;
-    const divergence = !isSovereign && leanWord && ((poleWord === "shadow" && domArcObj.lean > 12) || (poleWord === "transmuted" && domArcObj.lean < -12));
-    return (React.createElement("div", { className: "hn-wrap" },
-        React.createElement("div", { className: "hn-rlabel" }, "Your location on the map"),
-        React.createElement("h2", { className: "hn-arch hn-serif" }, name),
-        React.createElement("div", { className: "hn-coord" }, isSovereign
-            ? "◈ the current itself · profile flat, authorship high"
-            : `${ARC_NAME[arc]} terrain × ${poleWord} pole · authorship ${output.sovereign_pct}%`),
-        c.essence && React.createElement("p", { className: "hn-essence" }, c.essence),
-        c.draft && React.createElement("span", { className: "hn-draft" }, "result-page copy \u00B7 Phase-2 slot"),
-        React.createElement(CurrentGauge, { pct: output.sovereign_pct, threshold: C.SOV_HIGH }),
-        React.createElement(ProfileBars, { arcs: output.arcs, dominantArc: arc }),
-        !isSovereign && (React.createElement("div", { className: "hn-card" },
-            React.createElement("h4", null, "Your live edge"),
-            React.createElement("p", { className: "hn-edge" },
-                divergence ? (React.createElement(React.Fragment, null,
-                    "Your ",
-                    ARC_NAME[arc],
-                    " terrain ",
-                    React.createElement("b", null,
-                        "leans ",
-                        leanWord),
-                    " (",
-                    domArcObj.lean > 0 ? "+" : "",
-                    domArcObj.lean,
-                    "), but your authorship is ",
-                    output.sovereign_level,
-                    ". That gap \u2014 between where the terrain pulls and how much you\u2019re authoring \u2014 is exactly the edge to work. It\u2019s the difference between wanting the",
-                    " ",
-                    leanWord === "transmuted" ? "restored" : "protective",
-                    " move and having concluded it.")) : (React.createElement(React.Fragment, null,
-                    "Terrain and authorship point the same way here. Your ",
-                    ARC_NAME[arc],
-                    " arc is the most charged ground you stand on, and your Sovereign current holds you at the ",
-                    React.createElement("b", null, poleWord),
-                    " pole with some consistency.")),
-                output.mid_confirmed === false && React.createElement(React.Fragment, null, " The mid-arc read runs counter, so treat this placement as provisional."),
-                output.mid_confirmed === null && React.createElement(React.Fragment, null, " The mid-arc signal is neutral \u2014 this read is provisional, not locked."),
-                output.mid_confirmed === true && React.createElement(React.Fragment, null, " The mid-arc items corroborate this placement.")))),
-        (c.oneMove || c.bridge) && (React.createElement("div", { className: "hn-card" },
-            c.oneMove && (React.createElement(React.Fragment, null,
-                React.createElement("h4", null, "The one move \u00B7 this week"),
-                React.createElement("p", { className: "hn-move" }, c.oneMove))),
-            c.bridge && (React.createElement(React.Fragment, null,
-                React.createElement("h4", { style: { marginTop: c.oneMove ? 20 : 0 } }, "Into the 30 days"),
-                React.createElement("p", { className: "hn-bridge" }, c.bridge))))),
-        React.createElement("div", { className: "hn-actions" },
-            React.createElement("button", { className: "hn-btn", onClick: () => { try {
-                    window.HNTUAI && window.HNTUAI.store(output);
-                }
-                catch (e) { } var slug = (window.HNTUAI && window.HNTUAI.SLUG) ? window.HNTUAI.SLUG[output.archetype] : null; if (slug) {
-                    window.location.href = "./pages/" + slug + ".html";
-                }
-                else {
-                    window.alert("Non-result path (" + output.result_type + "): no archetype page, this is the honest no-placement outcome.");
-                } } }, "See your full result page \u2192"),
-            React.createElement("button", { className: "hn-btn hn-btn-ghost", onClick: onRetake }, "Retake"),
-            React.createElement("button", { className: "hn-btn hn-btn-ghost", onClick: () => window.alert("Phase 3: the 50-law Sovereignty Matrix merges in here — with your recommended laws lit up.") }, "View the Sovereignty Matrix")),
-        React.createElement(Diagnostics, { output: output, C: C, setC: setC })));
+    return (React.createElement("div", { className: "hn-wrap hn-redirect" },
+        React.createElement("div", { className: "hn-rlabel" }, "Reading your answers"),
+        React.createElement("h2", { className: "hn-arch hn-serif" }, "Placing you on the map\u2026"),
+        React.createElement("p", { className: "hn-essence" },
+            "Taking you to your result now.",
+            target ? " " : "",
+            target && React.createElement("a", { href: target, style: { color: "#B4893C", fontWeight: 600, textDecoration: "none", borderBottom: "1px solid #B4893C" } }, "Go now \u2192"))));
 }
 function hnLog(output, answers) {
     try {
@@ -18397,11 +18345,20 @@ function hnLog(output, answers) {
         payload.answers = JSON.stringify(answers || {});
         var body = JSON.stringify(payload);
         var url = "https://script.google.com/macros/s/AKfycbwUXYZxvoq3UgSbHNtooryDakWZrveOeNvdaZNRPJTsPDDW-1yjOuiyLAHgrjyVsQhU/exec";
-        if (navigator.sendBeacon) {
-            navigator.sendBeacon(url, new Blob([body], { type: "text/plain;charset=UTF-8" }));
+        var sent = false;
+        try {
+            if (navigator.sendBeacon) {
+                sent = navigator.sendBeacon(url, new Blob([body], { type: "text/plain;charset=UTF-8" }));
+            }
         }
-        else {
-            fetch(url, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=UTF-8" }, body: body });
+        catch (e) {
+            sent = false;
+        }
+        if (!sent) {
+            try {
+                fetch(url, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=UTF-8" }, body: body });
+            }
+            catch (e) { }
         }
     }
     catch (e) { }
@@ -18417,15 +18374,12 @@ function App() {
     // once the tiebreak is done, its forced choices override the unreadable primary
     const resolved = useMemo(() => (stage === "result" && needsTiebreak && Object.keys(tb).length >= 12 ? scoreTiebreak(tb, C) : null), [stage, needsTiebreak, tb, C]);
     const output = resolved || primary;
-    useEffect(() => { if (stage === "result")
-        hnLog(output, answers); }, [stage]);
     const reset = () => { setAnswers({}); setTb({}); setStage("intro"); };
     return (React.createElement("div", { className: "hn-root" },
         React.createElement("style", null, CSS),
         stage === "intro" && React.createElement(Intro, { onStart: () => { window.__hnStartedAt = Date.now(); setStage("quiz"); } }),
         stage === "quiz" && (React.createElement(Quiz, { order: order, answers: answers, setAnswers: setAnswers, onDone: () => setStage(needsTiebreak ? "tiebreak" : "result") })),
         stage === "tiebreak" && (React.createElement(Tiebreak, { reason: primary.result_type, tb: tb, setTb: setTb, onDone: () => setStage("result") })),
-        stage === "result" && (React.createElement(Result, { output: output, C: C, setC: setC, onRetake: reset }))));
+        stage === "result" && (React.createElement(ResultRedirect, { output: output, answers: answers, onRetake: reset }))));
 }
-ReactDOM.createRoot(document.getElementById("hn-app")).render(React.createElement(App, null));
-</script></body></html>
+ReactDOM.createRoot(document.getElementById("hn-app")).render(React.createElement(App, null));</script></body></html>
