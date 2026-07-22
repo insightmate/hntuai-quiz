@@ -194,6 +194,16 @@
 .hn-takeit a{color:var(--accent);font-style:normal;font-weight:600;text-decoration:none;border-bottom:1px solid var(--accent)}
 .hn-takeit a:hover{opacity:.75}
 @media print{.hn-capture,.hn-takeit{display:none!important}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}}
+<style>
+/* --- position-and-direction band (added) --- */
+.hn-band{margin:20px 0 30px;padding:18px 20px;border:1px solid var(--accent,#b07d2b);border-left-width:3px;border-radius:12px;background:var(--accent-tint,rgba(176,125,43,.07))}
+.hn-band-k{font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;color:var(--accent,#b07d2b);margin-bottom:8px}
+.hn-band-v{font-size:15.5px;line-height:1.62;color:var(--ink-soft,var(--ink,#23201b));margin:0}
+.hn-band-link{display:inline-block;margin-top:12px;font-weight:600;font-size:15px;color:var(--accent,#b07d2b);text-decoration:none;border-bottom:1px solid var(--accent,#b07d2b)}
+.hn-band-link:hover{opacity:.75}
+.hn-band.mild{background:transparent;border-color:transparent;border-left:3px solid var(--hair,#e3ddd0);border-radius:0;padding:4px 0 4px 16px;margin:16px 0 26px}
+.hn-band.mild .hn-band-k{color:var(--muted,#8a8272)}
+@media print{.hn-band-link{border-bottom:none}}
 </style>
 </head>
 <body>
@@ -223,6 +233,8 @@
     <div class="gr"><span class="gk">Authorship</span><span class="gv"><span class="num" data-hn="authorship-pct">83%</span> &nbsp;<span class="sub">how much of the relationship with the machine you set the terms of</span></span></div>
     <div class="gr"><span class="gk">Your one move</span><span class="gv">The moment you have 51% of what you need, close the tab and take one real step — and let the world, not the model, hand you the next read.</span></div>
   </div>
+
+  <div class="hn-band" data-hn-band hidden><div class="hn-band-k" data-hn-band-k></div><p class="hn-band-v" data-hn-band-v></p><a class="hn-band-link" data-hn-band-link href="#" hidden></a></div>
 
   <section>
     <p class="lead">So this is not a page of bad news, and it will not pretend to have caught you out. You did the thing the whole axis is built around: you took the scale of this moment seriously without letting it decide your Tuesday. You feel the tide and you keep your hands on the wheel. There is one edge left, and it is quiet — the kind that only shows up in someone who has already arrived. It is the scan that becomes the move. When reading the room is done well enough, it starts to feel like action, and a person can spend a very long time sensing the water without ever getting in.</p>
@@ -794,5 +806,44 @@
   function toast(msg){var t=document.createElement('div');t.className='hn-toast';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('on');});setTimeout(function(){t.classList.remove('on');setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},320);},1900);}
   function copy(str){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(str);}return new Promise(function(res,rej){try{var ta=document.createElement('textarea');ta.value=str;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.left='-9999px';document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.parentNode.removeChild(ta);res();}catch(e){rej(e);}});}
   wrap.addEventListener('click',function(e){var b=e.target.closest('.hn-cap-btn');if(!b)return;var act=b.getAttribute('data-act');if(act==='save'){window.print();return;}var d=payload();if(act==='share'){if(navigator.share){navigator.share(d).catch(function(){});}else{copy(d.text+' '+d.url).then(function(){toast('Link copied to clipboard');}).catch(function(){toast('Could not copy');});}return;}if(act==='copy'){copy(d.text+' '+d.url).then(function(){toast('Copied to clipboard');}).catch(function(){toast('Could not copy');});}});
+})();</script><script>(function(){
+  if(!window.HNTUAI||!HNTUAI.load||!HNTUAI.buildView)return;
+  var R=HNTUAI.load(); if(!R)return;
+  var view=HNTUAI.buildView(R,{archetype:"The Diviner"});
+  if(!view||!view.ok||view.resultType!=="archetype")return;
+  var lean=view.lean, pole=view.pole, axis=view.axisName;
+  var here=(view.archetype||"").replace(/^The\s+/,"");
+  var mismatch=(pole==="shadow"&&lean>0)||(pole==="transmuted"&&lean<0);
+  if(!mismatch)return;
+  var strong=Math.abs(lean)>=50, mild=Math.abs(lean)>=15&&Math.abs(lean)<50;
+  if(!strong&&!mild)return;
+  var toward=(pole==="shadow")?view.transmutedName:view.shadowName;
+  var tStrip=(toward||"").replace(/^The\s+/,"");
+  var slug=(HNTUAI.SLUG&&HNTUAI.SLUG[toward])?HNTUAI.SLUG[toward]:null;
+  var axisPct=view.axisPct, authorshipPct=view.authorshipPct;
+  var band=document.querySelector("[data-hn-band]"); if(!band)return;
+  var ke=band.querySelector("[data-hn-band-k]"),ve=band.querySelector("[data-hn-band-v]"),le=band.querySelector("[data-hn-band-link]");
+  var k,v;
+  if(pole==="shadow"){
+    if(strong){
+      k="You came out as the "+here+" \u2014 but you are already halfway out the door";
+      v="Your result comes from two things: the area where AI presses on you hardest (for you, "+axis+"), and how much you tend to set your own terms across the board. That second one came out at "+authorshipPct+"%, and it is what put you on the "+here+" side \u2014 it has not tipped over yet. But look at how you actually answered the "+axis+" questions: they sit at "+axisPct+"%, past the halfway point and toward the "+tStrip+", the healthy side of this pair. In plain terms: your gut already gets it, and your habits have not caught up. The "+here+" is where you are now. The "+tStrip+" is where you are heading.";
+    }else{
+      k="One thing to notice";
+      v="On "+axis+", your strongest area, your answers actually sit at "+axisPct+"% \u2014 just past the halfway point, toward the "+tStrip+", the healthier side of this pair. Your authorship reads "+authorshipPct+"%. Nothing is wrong. It just means your instinct there is a step ahead of your habits.";
+    }
+  }else{
+    if(strong){
+      k="You came out as the "+here+" \u2014 with one thing worth flagging";
+      v="On "+axis+", your strongest area, your answers still sit at "+axisPct+"% \u2014 back under the halfway point, toward the "+tStrip+", the stuck side of this pair. You earned the "+here+" overall \u2014 your authorship reads "+authorshipPct+"% \u2014 so this is not a downgrade. It is showing you the old habit you are moving away from, the one that still tugs when you are under pressure.";
+    }else{
+      k="One thing to notice";
+      v="On "+axis+", your strongest area, your answers still sit at "+axisPct+"% \u2014 just under the halfway point, toward the "+tStrip+", the stuck side of this pair. You earned the "+here+" overall. It is just the old pull, worth keeping half an eye on.";
+    }
+  }
+  ke.textContent=k; ve.textContent=v;
+  if(strong&&slug){le.textContent="Have a read of "+toward+" \u2192"; le.setAttribute("href","./"+slug+".html"); le.removeAttribute("hidden");}
+  if(mild)band.className="hn-band mild";
+  band.removeAttribute("hidden");
 })();</script></body>
 </html>
