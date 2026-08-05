@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#f6f2ea;--card:#fffdf8;--ink:#23201b;--ink-soft:#463f36;--muted:#8c8272;
+    --paper:#fffcf4;--card:#fffdf8;--ink:#23201b;--ink-soft:#463f36;--muted:#8c8272;
     --hair:#e5ddcd;--clay:#a8443a;--clay-soft:#c98a83;--sage:#4f7a6f;--sage-soft:#9cbcb1;--gold:#b07d2b;
     --accent:#4f7a6f;--accent-soft:#9cbcb1;--accent-tint:#f1f6f3;
     --mono:"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
@@ -45,11 +45,14 @@
   a:hover{border-bottom-color:var(--accent);}
   .glance{background:var(--card);border:1px solid var(--hair);border-radius:16px;padding:6px 24px;margin:24px 0 4px;}
   .glance .gr{display:grid;grid-template-columns:128px 1fr;gap:16px;padding:15px 0;border-bottom:1px solid var(--hair);align-items:baseline;}
+.glance .gr[hidden]{display:none;}
   .glance .gr:last-child{border-bottom:0;}
   .glance .gk{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:700;}
   .glance .gv{font-size:16.5px;color:var(--ink);line-height:1.4;}
   .glance .gv .num{font-family:var(--mono);color:var(--accent);font-weight:700;font-style:normal;font-size:15px;letter-spacing:-.02em;}
   .glance .gv .sub{color:var(--muted);font-size:14px;}
+  .glance .gv a{color:inherit;text-decoration:none;border-bottom:1px solid var(--clay-soft);}
+  .glance .gv a:hover{border-bottom-color:var(--clay);}
   .glance .gv.truth{font-family:"Fraunces",serif;font-style:italic;font-size:19px;color:var(--ink);}
   .mirror-intro{color:var(--ink-soft);margin-bottom:24px;}
   .tells{list-style:none;padding:0;margin:0 0 20px;display:flex;flex-direction:column;gap:10px;}
@@ -237,6 +240,7 @@
 
   <div class="glance">
     <div class="gr"><span class="gk">Your result</span><span class="gv">The Humanist · the Edge pole of <b>Value</b></span></div>
+    <div class="gr"><span class="gk">Your second signal</span><span class="gv"><a data-hn="secondary-link" href="./cultivator.html"><span data-hn="secondary-name">The Cultivator</span></a> · the Edge pole of <b data-hn="secondary-axis">Agency</b> &nbsp;<span class="sub">your next strongest axis after Value</span></span></div>
     <div class="gr"><span class="gk">The truth</span><span class="gv truth">Worth is not produced.</span></div>
     <div class="gr"><span class="gk">Value</span><span class="gv"><span class="num" data-hn="axis-pct">84%</span> toward the Humanist &nbsp;<span class="sub">how far your time is for living, not for producing more</span></span></div>
     <div class="gr"><span class="gk">Authorship</span><span class="gv"><span class="num" data-hn="authorship-pct">83%</span> &nbsp;<span class="sub">how much of the relationship with the machine you set the terms of</span></span></div>
@@ -673,6 +677,28 @@
       text: `${who} at ${p}% authors almost the whole relationship. The risk at this altitude is forgetting it was ever difficult.` };
   }
 
+  /* ---- the second signal ------------------------------------------------
+     The engine picks the dominant arc by activation, then breaks near-ties
+     (anything within T_TIE of the top) by the larger |lean|. The second signal
+     runs the identical rule again over the seven arcs that are left, so it is
+     chosen the way the first one was rather than being whatever happened to
+     sort next. Plain ranked[1] would sometimes hand back the arc that led on
+     activation and then LOST the tie-break, which would be the one result the
+     display could not explain.
+
+     The pole is not re-derived per axis. Armour/Edge comes from authorship,
+     which is a single number for the whole profile, so the second signal
+     always sits on the same pole as the first. That is the instrument, not a
+     shortcut: it is why the row reads "the Armour pole of Agency" and not a
+     second, independent verdict.                                          */
+  const T_TIE = 10;
+  function pickArc(list) {
+    if (!list.length) return null;
+    const maxAct = list.reduce((m, a) => Math.max(m, a.activation), -Infinity);
+    const tied = list.filter((a) => (maxAct - a.activation) <= T_TIE);
+    return tied.reduce((b, a) => (Math.abs(a.lean) > Math.abs(b.lean) ? a : b), tied[0]);
+  }
+
   /* ---- main -------------------------------------------------------------
      result : engine output object
      page   : { archetype } — the page this is being rendered into
@@ -749,6 +775,22 @@
     const t = stripThe(view.transmutedName), sh = stripThe(AXES[arcKey].shadow);
     view.axisDescriptor = `which way your ${meta.name.toLowerCase()} tilts \u2014 toward the ${sh} or the ${t}. 50% is the midpoint`;
     view.axisDescriptorLong = `${meta.name} measures which way you tilt on this axis \u2014 toward the ${sh}\u2019s move or the ${t}\u2019s. 50% is the midpoint, not a pass mark.`;
+
+    /* second signal: same rule, run again on the arcs that are left.
+       result.secondary_arc is honoured if a future engine emits it. */
+    const rest = (result.arcs || []).filter((a) => a.arc !== arcKey && AXES[a.arc]);
+    const sec = (result.secondary_arc && rest.find((a) => a.arc === result.secondary_arc))
+                || pickArc(rest);
+    if (sec) {
+      const secName = view.pole === "transmuted" ? AXES[sec.arc].transmuted : AXES[sec.arc].shadow;
+      view.secondaryArc = sec.arc;
+      view.secondaryAxisName = AXES[sec.arc].name;
+      view.secondaryArchetype = secName;
+      view.secondarySlug = SLUG[secName] || null;
+    } else {
+      view.secondaryArc = null; view.secondaryAxisName = null;
+      view.secondaryArchetype = null; view.secondarySlug = null;
+    }
     return view;
   }
 
@@ -779,6 +821,21 @@
         el.style.opacity = p.intensity.toFixed(2);   // faint = quiet axis, bold = charged
       });
     });
+
+    if (view.secondaryArchetype) {
+      set("secondary-name", (el) => { el.textContent = view.secondaryArchetype; });
+      set("secondary-axis", (el) => { el.textContent = view.secondaryAxisName; });
+      if (view.secondarySlug)
+        set("secondary-link", (el) => { el.setAttribute("href", "./" + view.secondarySlug + ".html"); });
+    } else {
+      /* no second signal in this result: drop the row rather than leave the
+         page's standalone example values standing as if they were the
+         visitor's own. */
+      set("secondary-link", (el) => {
+        const row = el.closest && el.closest(".gr");
+        if (row) row.setAttribute("hidden", "");
+      });
+    }
     return view;
   }
 
@@ -801,8 +858,12 @@
   if (!result) return;                         // standalone: keep example values
   var view = HNTUAI.hydrate(result, { archetype: "The Humanist" });
   if (!view.ok) {
-    if (view.reason === "wrong-page" && view.correctSlug)
-      location.replace("./" + view.correctSlug + ".html");
+    /* The stored result doesn't belong to this page: the visitor arrived by
+       a link - the second-signal row, the band's twin link, a shared URL, an
+       inbound link from the Substack post. The page renders as itself, with
+       its standalone example values, and nothing is redirected. index.html
+       sends people to their own result page directly, so a bounce here only
+       ever caught deliberate visits and broke them. */
     return;
   }
   document.documentElement.setAttribute("data-hn-ready", "1");

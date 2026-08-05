@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The 16 AI Sovereignty Archetypes™ — The #HowNotToUseAI Diagnostic</title><meta name="description" content="An unforgiving, fifteen-minute audit of your sovereignty in the age of AI. 129 statements. Eight dimensions. Sixteen positions. Which one are you?"><meta property="og:type" content="website"><meta property="og:url" content="https://quiz.hownottouseai.com/"><meta property="og:site_name" content="How Not To Use AI"><meta property="og:title" content="There is no trick to mastering AI. There is only mastering yourself."><meta property="og:description" content="An unforgiving, fifteen-minute audit of your sovereignty in the age of AI. 129 statements. Eight dimensions. Sixteen positions. Which one are you?"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="There is no trick to mastering AI. There is only mastering yourself."><meta name="twitter:description" content="An unforgiving, fifteen-minute audit of your sovereignty in the age of AI. 129 statements. Eight dimensions. Sixteen positions. Which one are you?"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet"><style>html,body{margin:0;background:#F4F3EF;}.hn-testbar{font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.06em;color:#6f6656;background:#efe9dc;border-bottom:1px solid #DEDBD2;padding:9px 16px;text-align:center;}.hn-testbar a{color:#B4893C;font-weight:600;text-decoration:none;border-bottom:1px solid #B4893C;}#hn-loading{font-family:'Inter',system-ui,sans-serif;color:#8A8E9C;text-align:center;padding:90px 20px;font-size:15px;}</style></head><body><div id="hn-app"><div id="hn-loading">Loading the diagnostic&hellip;</div></div><script>(function(){
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The 16 AI Sovereignty Archetypes™ — The #HowNotToUseAI Diagnostic</title><meta name="description" content="An unforgiving, fifteen-minute audit of your sovereignty in the age of AI. 129 statements. Eight dimensions. Sixteen positions. Which one are you?"><meta property="og:type" content="website"><meta property="og:url" content="https://quiz.hownottouseai.com/"><meta property="og:site_name" content="How Not To Use AI"><meta property="og:title" content="There is no trick to mastering AI. There is only mastering yourself."><meta property="og:description" content="An unforgiving, fifteen-minute audit of your sovereignty in the age of AI. 129 statements. Eight dimensions. Sixteen positions. Which one are you?"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="There is no trick to mastering AI. There is only mastering yourself."><meta name="twitter:description" content="An unforgiving, fifteen-minute audit of your sovereignty in the age of AI. 129 statements. Eight dimensions. Sixteen positions. Which one are you?"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet"><style>html,body{margin:0;background:#fffcf4;}.hn-testbar{font-family:'Spline Sans Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.06em;color:#6f6656;background:#efe9dc;border-bottom:1px solid #DEDBD2;padding:9px 16px;text-align:center;}.hn-testbar a{color:#B4893C;font-weight:600;text-decoration:none;border-bottom:1px solid #B4893C;}#hn-loading{font-family:'Inter',system-ui,sans-serif;color:#8A8E9C;text-align:center;padding:90px 20px;font-size:15px;}</style></head><body><div id="hn-app"><div id="hn-loading">Loading the diagnostic&hellip;</div></div><script>(function(){
 if(!window.process){window.process={env:{NODE_ENV:"production"}};}
 var mods={},cache={};
 function reg(id,fn){mods[id]=fn;}
@@ -17322,6 +17322,28 @@ window.ReactDOM=req("react-dom/client");
       text: `${who} at ${p}% authors almost the whole relationship. The risk at this altitude is forgetting it was ever difficult.` };
   }
 
+  /* ---- the second signal ------------------------------------------------
+     The engine picks the dominant arc by activation, then breaks near-ties
+     (anything within T_TIE of the top) by the larger |lean|. The second signal
+     runs the identical rule again over the seven arcs that are left, so it is
+     chosen the way the first one was rather than being whatever happened to
+     sort next. Plain ranked[1] would sometimes hand back the arc that led on
+     activation and then LOST the tie-break, which would be the one result the
+     display could not explain.
+
+     The pole is not re-derived per axis. Armour/Edge comes from authorship,
+     which is a single number for the whole profile, so the second signal
+     always sits on the same pole as the first. That is the instrument, not a
+     shortcut: it is why the row reads "the Armour pole of Agency" and not a
+     second, independent verdict.                                          */
+  const T_TIE = 10;
+  function pickArc(list) {
+    if (!list.length) return null;
+    const maxAct = list.reduce((m, a) => Math.max(m, a.activation), -Infinity);
+    const tied = list.filter((a) => (maxAct - a.activation) <= T_TIE);
+    return tied.reduce((b, a) => (Math.abs(a.lean) > Math.abs(b.lean) ? a : b), tied[0]);
+  }
+
   /* ---- main -------------------------------------------------------------
      result : engine output object
      page   : { archetype } — the page this is being rendered into
@@ -17398,6 +17420,22 @@ window.ReactDOM=req("react-dom/client");
     const t = stripThe(view.transmutedName), sh = stripThe(AXES[arcKey].shadow);
     view.axisDescriptor = `which way your ${meta.name.toLowerCase()} tilts \u2014 toward the ${sh} or the ${t}. 50% is the midpoint`;
     view.axisDescriptorLong = `${meta.name} measures which way you tilt on this axis \u2014 toward the ${sh}\u2019s move or the ${t}\u2019s. 50% is the midpoint, not a pass mark.`;
+
+    /* second signal: same rule, run again on the arcs that are left.
+       result.secondary_arc is honoured if a future engine emits it. */
+    const rest = (result.arcs || []).filter((a) => a.arc !== arcKey && AXES[a.arc]);
+    const sec = (result.secondary_arc && rest.find((a) => a.arc === result.secondary_arc))
+                || pickArc(rest);
+    if (sec) {
+      const secName = view.pole === "transmuted" ? AXES[sec.arc].transmuted : AXES[sec.arc].shadow;
+      view.secondaryArc = sec.arc;
+      view.secondaryAxisName = AXES[sec.arc].name;
+      view.secondaryArchetype = secName;
+      view.secondarySlug = SLUG[secName] || null;
+    } else {
+      view.secondaryArc = null; view.secondaryAxisName = null;
+      view.secondaryArchetype = null; view.secondarySlug = null;
+    }
     return view;
   }
 
@@ -17428,6 +17466,21 @@ window.ReactDOM=req("react-dom/client");
         el.style.opacity = p.intensity.toFixed(2);   // faint = quiet axis, bold = charged
       });
     });
+
+    if (view.secondaryArchetype) {
+      set("secondary-name", (el) => { el.textContent = view.secondaryArchetype; });
+      set("secondary-axis", (el) => { el.textContent = view.secondaryAxisName; });
+      if (view.secondarySlug)
+        set("secondary-link", (el) => { el.setAttribute("href", "./" + view.secondarySlug + ".html"); });
+    } else {
+      /* no second signal in this result: drop the row rather than leave the
+         page's standalone example values standing as if they were the
+         visitor's own. */
+      set("secondary-link", (el) => {
+        const row = el.closest && el.closest(".gr");
+        if (row) row.setAttribute("hidden", "");
+      });
+    }
     return view;
   }
 
@@ -17917,7 +17970,7 @@ function scoreAll(answers, C) {
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap');
 :root{
-  --ink:#1E212B; --ink-2:#3a3f4d; --bone:#F4F3EF; --paper:#FBFAF7;
+  --ink:#1E212B; --ink-2:#3a3f4d; --bone:#fffcf4; --paper:#FBFAF7;
   --line:#DEDBD2; --muted:#8A8E9C; --gold:#B4893C; --gold-soft:#efe4cd;
   --shadow-tone:#B7B2A6; --sage:#5F8064; --plum:#8A627F; --neutral-c:#C6C2B7;
 }
@@ -17947,7 +18000,7 @@ const CSS = `
 .hn-btn-ghost:hover{border-color:var(--ink)}
 
 /* quiz — paged, graduated agree/disagree scale */
-.hn-qhead{position:sticky;top:0;z-index:5;background:linear-gradient(var(--bone) 72%,rgba(244,243,239,0));padding:16px 0 16px;display:flex;align-items:center;gap:16px}
+.hn-qhead{position:sticky;top:0;z-index:5;background:linear-gradient(var(--bone) 72%,rgba(255,252,244,0));padding:16px 0 16px;display:flex;align-items:center;gap:16px}
 .hn-prev{background:none;border:none;cursor:pointer;color:var(--gold);font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;padding:2px 0}
 .hn-prev:disabled{opacity:.28;cursor:default}
 .hn-pbar{flex:1;height:4px;background:var(--line);border-radius:2px;position:relative;overflow:hidden}
